@@ -1,47 +1,40 @@
 .model small
 .386
 .stack 1024
-.data
-DinoX db 0
-DinoY db 0    
 .code
 
 main PROC
-    mov ax, @code       ; point DS to this segment
-    mov ds, ax
-    mov ah, 0           ; 0=Set Video mode (AL=Mode)
-    mov al, 13h         ; mode 13 (VGA 320x200 256 color)
-    int 10h             ; bios int
-    
+    mov ah, 0          	; 0=Set Video mode (AL=Mode)
+    mov al, 13h        	; mode 13 (VGA 320x200 256 color)
+    int 10h            	; bios int
+	
     ; Set background color to white
     mov ax, 0A000h      ; Segment of video memory
     mov es, ax
     xor di, di          ; Starting offset of video memory
-    mov cx, 320*170     ; Total number of pixels (320 * 200)
+    mov cx, 320*200     ; Total number of pixels (320 * 200)
 
-    mov al, 0Bh         ; White color
+    mov al, 0Fh         ; White color
     rep stosb           ; Set all pixels to white
-    
-    mov cx, 320*30     ; Total number of pixels (320 * 200)
 
-    mov al, 02h         ; White color
-    rep stosb   
-    ; Draw the sprite at its initial position
-    mov DinoX, 0
-    mov DinoY, 23
-    call ShowDino
+    mov dx, 400         ; x-coordinate greater than the width of the screen
+    mov dh, dl
+    mov dl, 22          ; y-coordinate
+
+    call ShowSprite     ; Draw the sprite
 
     infloop:
     gravity:
-        cmp DinoY, 23
-        jg onGround
-        call ShowDino
-        inc DinoY
-        call ShowDino
+        cmp dh, 50       ; Check if the sprite has moved out of the screen on the left side
+        jge onGround
+        call ShowSprite   
+        dec dh
+        call ShowSprite
         call Delay
         jmp gravity
 
     onGround:
+	
         call ReadChar
 
         cmp al, 'w'
@@ -52,15 +45,15 @@ main PROC
 moveUp:
     mov ecx, 4
     jumpLoop:
-        call ShowDino
-        dec DinoY
-        call ShowDino
+        call ShowSprite
+        dec dl
+        call ShowSprite
         call Delay
     loop jumpLoop
     jmp infloop
 
-
 main ENDP
+
 
 Delay PROC
     push cx             ; save original value of cx
@@ -73,7 +66,7 @@ Delay PROC
 Delay ENDP
 
 ReadChar PROC
-    mov ah, 09H         ; check for key press w/o waiting
+    mov ah, 01h         ; check for key press w/o waiting
     int 16h            
     jz @F               ; jmp to end if z = set (no key pressed)
     mov ah, 00h         
@@ -82,19 +75,12 @@ ReadChar PROC
     ret
 ReadChar ENDP
 
-ShowDino PROC
-    mov dh, DinoX      ; Fetch Dino's X position
-    mov dl, DinoY      ; Fetch Dino's Y position
-    call ShowSprite
-    ret
-ShowDino ENDP
-
-
 ; XOR sprite at (X,Y) pos (DH,DL)
 ShowSprite PROC
+    push cx
+    ; calculate screen pos
     mov ax, @code       ; point DS to this segment
     mov ds, ax
-    push cx
     
     ;prepares the 8x8 space for sprite
     push dx             ; preserve dx
@@ -136,20 +122,20 @@ DrawBitmap_Xagain:
 ShowSprite ENDP
 
 BitmapTest:             ; dinosaur, 1 byte per pixel
-    DB 00h,00h,00h,0Bh,0Bh,0Bh,0Bh,0BH,0BH,0BH,0BH,0BH,0BH,00h,00h    ;  0
-    DB 00h,0BH,0BH,09H,09H,09H,09H,09H,09H,09H,09H,01H,01H,0BH,00h    ;  1
-    DB 0BH,01H,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,01H,01H,0BH    ;  2
-    DB 0BH,01H,0BH,09H,04h,0BH,09H,09H,09H,09H,09H,09H,09H,01H,0BH    ;  3
-    DB 00h,0BH,0BH,09H,04h,0BH,09H,09H,09H,09H,09H,09H,09H,01H,0BH    ;  4
-    DB 0BH,01H,0BH,09H,09H,09H,09H,09H,09H,09H,0BH,09H,09H,0BH,0BH    ;  5
-    DB 0BH,01H,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,09H,01H,0BH    ;  6
-    DB 00h,0BH,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,09H,01H,0BH    ;  7
-    DB 00h,00h,00h,0BH,09H,09H,09H,09H,09H,09H,09H,0BH,0BH,0BH,00h    ;  8
-    DB 00h,00h,00h,0BH,09H,09H,09H,09H,09H,09H,09H,0BH,00h,00h,00h    ;  9
-    DB 00h,0BH,0BH,0BH,09H,09H,09H,09H,09H,09H,09H,0BH,00h,00h,00h    ;  10
-    DB 00h,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,0BH,00h,00h,00h    ;  11
-    DB 00h,0BH,0BH,09H,09H,09H,0BH,0BH,0BH,09H,09H,0BH,00h,00h,00h    ;  12
-    DB 00h,00h,0BH,0BH,0BH,09H,0BH,00h,0BH,09H,0BH,00h,00h,00h,00h    ;  13
-    DB 00h,00h,00h,00h,0BH,0BH,0BH,00h,0BH,0BH,0BH,00h,00h,00h,00h    ;  14
+    DB 00h,00h,00h,0Fh,0Fh,0Fh,0Fh,0Fh,0Fh,0Fh,0Fh,0Fh,0Fh,00h,00h    ;  0
+    DB 00h,0Fh,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,05h,0Fh,00h    ;  1
+    DB 0Fh,05h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,05h,0Fh    ;  2
+    DB 0Fh,05h,0Fh,0Dh,00h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,0Fh    ;  3
+    DB 00h,0Fh,0Fh,0Dh,00h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,0Fh    ;  4
+    DB 0Fh,05h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Fh,0Dh,0Dh,0Fh,0Fh    ;  5
+    DB 0Fh,05h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,0Fh    ;  6
+    DB 00h,0Fh,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,05h,0Fh    ;  7
+    DB 00h,00h,00h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Fh,0Fh,0Fh,00h    ;  8
+    DB 00h,00h,00h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Fh,00h,00h,00h    ;  9
+    DB 00h,0Fh,0Fh,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Fh,00h,00h,00h    ;  10
+    DB 00h,0Fh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Fh,00h,00h,00h    ;  11
+    DB 00h,0Fh,0Fh,0Dh,0Dh,0Dh,0Fh,0Fh,0Fh,0Dh,0Dh,0Fh,00h,00h,00h    ;  12
+    DB 00h,00h,0Fh,0Fh,0Fh,0Dh,0Fh,00h,0Fh,0Dh,0Fh,00h,00h,00h,00h    ;  13
+    DB 00h,00h,00h,00h,0Fh,0Fh,0Fh,00h,0Fh,0Fh,0Fh,00h,00h,00h,00h    ;  14
 
 END main

@@ -1,45 +1,49 @@
 .model small
 .386
 .stack 1024
+.data
+DinoX db 0
+DinoY db 0 
+BoulderX db 0
+BoulderY db 0   
 .code
 
 main PROC
-    mov ah, 0          	; 0=Set Video mode (AL=Mode)
-    mov al, 13h        	; mode 13 (VGA 320x200 256 color)
-    int 10h            	; bios int
-	
+    mov ax, @code       ; point DS to this segment
+    mov ds, ax
+    mov ah, 0           ; 0=Set Video mode (AL=Mode)
+    mov al, 13h         ; mode 13 (VGA 320x200 256 color)
+    int 10h             ; bios int
+    
     ; Set background color to white
     mov ax, 0A000h      ; Segment of video memory
     mov es, ax
     xor di, di          ; Starting offset of video memory
-    mov cx, 320*170       ; Total number of pixels (320 * 200)
+    mov cx, 320*170     ; Total number of pixels (320 * 200)
 
     mov al, 0Bh         ; White color
     rep stosb           ; Set all pixels to white
-
-
+    
     mov cx, 320*30     ; Total number of pixels (320 * 200)
 
     mov al, 02h         ; White color
-    rep stosb    
-
-    mov dh,0          ; x
-    mov dl,23          ; y
-
-    call ShowSprite     ; Draw the sprite
+    rep stosb   
+    ; Draw the sprite at its initial position
+    mov DinoX, 0
+    mov DinoY, 23
+    call ShowDino
 
     infloop:
     gravity:
-        cmp dl, 23
+        cmp DinoY, 23
         jg onGround
-        call ShowSprite   
-        inc dl
-        call ShowSprite
+        call ShowDino
+        inc DinoY
+        call ShowDino
         call Delay
         jmp gravity
 
     onGround:
-	
         call ReadChar
 
         cmp al, 'w'
@@ -50,15 +54,15 @@ main PROC
 moveUp:
     mov ecx, 4
     jumpLoop:
-        call ShowSprite
-        dec dl
-        call ShowSprite
+        call ShowDino
+        dec DinoY
+        call ShowDino
         call Delay
     loop jumpLoop
     jmp infloop
 
-main ENDP
 
+main ENDP
 
 Delay PROC
     push cx             ; save original value of cx
@@ -80,12 +84,25 @@ ReadChar PROC
     ret
 ReadChar ENDP
 
+ShowDino PROC
+    mov dh, DinoX      ; Fetch Dino's X position
+    mov dl, DinoY      ; Fetch Dino's Y position
+    call ShowSprite
+    ret
+ShowDino ENDP
+
+showBoulder PROC
+    mov dh, BoulderX      ; Fetch Dino's X position
+    mov dl, BoulderY      ; Fetch Dino's Y position
+    call ShowSprite
+    ret
+showBoulder ENDP
+
 ; XOR sprite at (X,Y) pos (DH,DL)
 ShowSprite PROC
-    push cx
-    ; calculate screen pos
     mov ax, @code       ; point DS to this segment
     mov ds, ax
+    push cx
     
     ;prepares the 8x8 space for sprite
     push dx             ; preserve dx
