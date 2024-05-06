@@ -23,23 +23,23 @@ main PROC
 
     mov ax, @data
     mov ds, ax 
+
     lea si, DinoXY
-    mov word ptr [si], 010Ah 
+    mov word ptr [si], 0100h    
     mov dx, word ptr [si]
     call drawDino
-    lea si, BoulderXY
-    mov word ptr [si], 0f0ah
-    mov dx, word ptr [si]
-    call drawBoulder
-    call slide
+
+    call slideLoop
 
     infloop:
         gravity:
-            cmp dl, 0Ah
+            
+            cmp dl, 0ah 
             jg onGround
             call drawDino
             inc dl
             call drawDino
+            call Delay
             jmp gravity
     
         onGround:
@@ -61,19 +61,19 @@ main PROC
 main ENDP
 
 Delay PROC
-        push cx            
-        mov ecx, 65500  
-        delay_loop:
-            nop             
-            loop delay_loop
-        pop cx
-        ret
+    push cx            
+    mov ecx, 65500  
+    delay_loop:
+        nop             
+        loop delay_loop
+    pop cx
+    ret
 Delay ENDP
 
 ReadChar PROC
-    mov ah, 09H         ; check for key press w/o waiting
+    mov ah, 09H        
     int 16h            
-    jz @F               ; jmp to end if z = set (no key pressed)
+    jz @F               
     mov ah, 00h         
     int 16h 
 @@:    
@@ -86,66 +86,73 @@ drawDino PROC
     ret
 drawDino ENDP
 
-calcXY PROC 
-        mov ax, @code
-        mov ds, ax
-        push dx
-            mov ax, 15
-            mul dh
-            mov di, ax
-            mov ax, 15*320
-            mov bx, 0
-            add bl, dl
-            mul bx 
-            add di, ax
-        pop dx 
-        ret
-calcXY ENDP
+slideLoop PROC
+    lea si, BoulderXY
+    mov word ptr [si], 0f00h 
+    mov ax, word ptr [si]
+    call drawBoulder
 
-drawImg PROC
-        push cx
-        lea si, BitmapTest  
-        mov ax, 0A000h  
-        mov es, ax     
-        mov cl, 15
-        y_axis:
-            push di
-            mov ch, 15
-        x_axis:
-            mov al, [SI]
-            xor al, byte ptr es:[di]   
-            mov byte ptr es:[di], al  
-            inc si
-            inc di
-            dec ch
-            jnz x_axis
-        pop di
-        add di, 320
-        inc bl
-        dec cl 
-        jnz y_axis
-        pop cx
+    l1:
+        cmp dh, 01h
+        jle slideStop
+        call drawBoulder
+        dec dh
+        call drawBoulder
+        call Delay
+        jmp l1
+
+    slideStop:
         ret
-drawImg ENDP
+slideLoop ENDP
 
 drawBoulder PROC
+    mov dx, ax
     call calcXY
     call drawImg
     ret
 drawBoulder ENDP
 
-Slide PROC
-    slideloop:
-        cmp dl, 00h
-        jle slidestop
-        call drawBoulder
-        dec dl
-        call drawBoulder
-        call Delay
-       jmp slideloop
-    slidestop:
-        ret
-Slide ENDP
+calcXY PROC 
+    mov ax, @code
+    mov ds, ax
+    push dx
+    mov ax, 15
+    mul dh
+    mov di, ax
+    mov ax, 15*320
+    mov bx, 0
+    add bl, dl
+    mul bx 
+    add di, ax
+    pop dx 
+    ret
+calcXY ENDP
+
+drawImg PROC
+    push cx
+    lea si, BitmapTest  
+    mov ax, 0A000h  
+    mov es, ax     
+    mov cl, 15
+    y_axis:
+        push di
+        mov ch, 15
+    x_axis:
+        mov al, [SI]
+        xor al, byte ptr es:[di]   
+        mov byte ptr es:[di], al  
+        inc si
+        inc di
+        dec ch
+        jnz x_axis
+    pop di
+    add di, 320
+    inc bl
+    dec cl 
+    jnz y_axis
+    pop cx
+    ret
+drawImg ENDP
 
 BitmapTest:             
     DB 00h,00h,00h,0Bh,0Bh,0Bh,0Bh,0BH,0BH,0BH,0BH,0BH,0BH,00h,00h   
