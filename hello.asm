@@ -64,7 +64,7 @@ main ENDP
 
 Delay PROC
     push cx             ; save original value of cx
-    mov ecx, 50000   
+    mov ecx, 65000   
     delay_loop:
         nop             ; no operation
         loop delay_loop

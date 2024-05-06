@@ -69,7 +69,7 @@ main ENDP
 
 Delay PROC
     push cx            
-    mov ecx, 50000   
+    mov ecx, 65000   
     delay_loop:
         nop             
         loop delay_loop
@@ -88,16 +88,24 @@ ReadChar PROC
 ReadChar ENDP
 
 ShowDino PROC
+    push ax
+    push dx
     mov dh, DinoX      
     mov dl, DinoY      
     call ShowSprite
+    pop dx
+    pop ax
     ret
 ShowDino ENDP
 
 showBoulder PROC
+    push ax
+    push dx
     mov dh, BoulderX      
     mov dl, BoulderY      
     call ShowSprite
+    pop dx
+    pop ax
     ret
 showBoulder ENDP
 
