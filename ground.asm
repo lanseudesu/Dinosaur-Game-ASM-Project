@@ -31,6 +31,10 @@ main PROC
     mov DinoX, 0
     mov DinoY, 23
     call ShowDino
+    mov BoulderX, 25
+    mov BoulderY, 23
+    call showBoulder
+    call Slide
 
     infloop:
     gravity:
@@ -96,6 +100,19 @@ showBoulder PROC
     call ShowSprite
     ret
 showBoulder ENDP
+
+Slide PROC
+    slideloop:
+        cmp BoulderX, 1
+        jle slidestop
+        call ShowBoulder
+        dec BoulderX
+        call ShowBoulder
+        call Delay
+       jmp slideloop
+    slidestop:
+        jmp slideloop
+Slide ENDP
 
 
 ShowSprite PROC
