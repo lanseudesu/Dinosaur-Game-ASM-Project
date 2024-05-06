@@ -26,18 +26,20 @@ main PROC
     lea si, DinoXY
     mov word ptr [si], 010Ah 
     mov dx, word ptr [si]
-    call calcXY
-    call drawImg
+    call drawDino
+    lea si, BoulderXY
+    mov word ptr [si], 0f0ah
+    mov dx, word ptr [si]
+    call drawBoulder
+    call slide
 
     infloop:
         gravity:
             cmp dl, 0Ah
             jg onGround
-            call calcXY
-            call drawImg
+            call drawDino
             inc dl
-            call calcXY
-            call drawImg
+            call drawDino
             jmp gravity
     
         onGround:
@@ -49,11 +51,9 @@ main PROC
         moveUp:
             mov ecx, 4
             jumpLoop:
-                call calcXY
-                call drawImg
+                call drawDino
                 dec dl
-                call calcXY
-                call drawImg
+                call drawDino
                 call delay
             loop jumpLoop
             jmp infloop
@@ -62,7 +62,7 @@ main ENDP
 
 Delay PROC
         push cx            
-        mov ecx, 65510  
+        mov ecx, 65500  
         delay_loop:
             nop             
             loop delay_loop
@@ -79,6 +79,12 @@ ReadChar PROC
 @@:    
     ret
 ReadChar ENDP
+
+drawDino PROC
+    call calcXY
+    call drawImg
+    ret
+drawDino ENDP
 
 calcXY PROC 
         mov ax, @code
@@ -121,6 +127,25 @@ drawImg PROC
         pop cx
         ret
 drawImg ENDP
+
+drawBoulder PROC
+    call calcXY
+    call drawImg
+    ret
+drawBoulder ENDP
+
+Slide PROC
+    slideloop:
+        cmp dl, 00h
+        jle slidestop
+        call drawBoulder
+        dec dl
+        call drawBoulder
+        call Delay
+       jmp slideloop
+    slidestop:
+        ret
+Slide ENDP
 
 BitmapTest:             
     DB 00h,00h,00h,0Bh,0Bh,0Bh,0Bh,0BH,0BH,0BH,0BH,0BH,0BH,00h,00h   
