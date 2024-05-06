@@ -25,7 +25,7 @@ main PROC
     mov ds, ax 
 
     lea si, DinoXY
-    mov word ptr [si], 0100h    
+    mov word ptr [si], 010ah    
     mov dx, word ptr [si]
     call drawDino
 
@@ -33,7 +33,6 @@ main PROC
 
     infloop:
         gravity:
-            
             cmp dl, 0ah 
             jg onGround
             call drawDino
@@ -87,9 +86,10 @@ drawDino PROC
 drawDino ENDP
 
 slideLoop PROC
+    push dx
     lea si, BoulderXY
-    mov word ptr [si], 0f00h 
-    mov ax, word ptr [si]
+    mov word ptr [si], 0f0ah 
+    mov dx, word ptr [si]
     call drawBoulder
 
     l1:
@@ -102,11 +102,11 @@ slideLoop PROC
         jmp l1
 
     slideStop:
+        pop dx
         ret
 slideLoop ENDP
 
 drawBoulder PROC
-    mov dx, ax
     call calcXY
     call drawImg
     ret
