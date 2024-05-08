@@ -23,41 +23,56 @@ main PROC
 
     mov ax, @data
     mov ds, ax 
+    
+    lea si, BoulderXY
+    mov word ptr [si], 0f0bh 
+    mov dx, word ptr [si]
+    call drawBoulder
 
     lea si, DinoXY
-    mov word ptr [si], 010ah    
+    mov word ptr [si], 010bh    
     mov dx, word ptr [si]
-    call drawDino
-
-    call slideLoop
+    call drawDino 
 
     infloop:
-        gravity:
-            cmp dl, 0ah 
-            jg onGround
-            call drawDino
-            inc dl
-            call drawDino
-            call Delay
-            jmp gravity
-    
-        onGround:
-            call ReadChar
-            cmp al, 'w'
+        mov dx, 0f0bh
+        call drawBoulder
+        l1:
+            cmp dh, 00h
+            jle slideStop
+            call ReadCharWithTimeout
+            cmp al, 'w' 
+            push dx
             je moveUp
+            call drawBoulder
+            dec dh
+            call drawBoulder
+            call Delay
+            jmp l1
+        slideStop:
+            call drawBoulder
             jmp infloop
-
-        moveUp:
-            mov ecx, 4
-            jumpLoop:
-                call drawDino
-                dec dl
-                call drawDino
-                call delay
-            loop jumpLoop
-            jmp infloop
-
 main ENDP
+
+moveUp PROC
+    mov dx, 010bh
+    mov ecx, 4
+    jumpLoop:
+        call drawDino
+        dec dl
+        call drawDino
+        call delay
+    loop jumpLoop
+    mov ecx, 4
+    fallLoop:
+        call drawDino
+        inc dl
+        call drawDino
+        call Delay
+    loop fallLoop
+    pop dx
+    jmp l1
+moveUp ENDP
 
 Delay PROC
     push cx            
@@ -85,26 +100,16 @@ drawDino PROC
     ret
 drawDino ENDP
 
-slideLoop PROC
-    push dx
-    lea si, BoulderXY
-    mov word ptr [si], 0f0ah 
-    mov dx, word ptr [si]
-    call drawBoulder
-
-    l1:
-        cmp dh, 01h
-        jle slideStop
-        call drawBoulder
-        dec dh
-        call drawBoulder
-        call Delay
-        jmp l1
-
-    slideStop:
-        pop dx
-        ret
-slideLoop ENDP
+ReadCharWithTimeout PROC
+    mov ah, 1   
+    int 16h
+    jz NoKey        
+    mov ah, 0       
+    int 16h
+    ret
+    NoKey:
+    ret
+ReadCharWithTimeout ENDP
 
 drawBoulder PROC
     call calcXY
