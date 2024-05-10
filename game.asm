@@ -1,9 +1,13 @@
+;todo: fix boulder sprite that still prints at last pos
+
 .model small
 .386
 .stack 1024
 .data
     DinoXY dw 960 dup (?)    
-    BoulderXY db 960 dup (?)
+    curDinoXY dw 0
+    curBoulderXY dw 0
+    isJumpFall db 0
 .code
 
 main PROC
@@ -23,11 +27,10 @@ main PROC
 
     mov ax, @data
     mov ds, ax 
-    
-    lea si, BoulderXY
-    mov word ptr [si], 0f0bh 
-    mov dx, word ptr [si]
-    call drawBoulder
+
+    mov curBoulderXY, 0
+    mov curDinoXY, 0
+    mov isJumpFall, 0
 
     lea si, DinoXY
     mov word ptr [si], 010bh    
@@ -42,7 +45,6 @@ main PROC
             jle slideStop
             call ReadCharWithTimeout
             cmp al, 'w' 
-            push dx
             je moveUp
             call drawBoulder
             dec dh
@@ -52,34 +54,79 @@ main PROC
         slideStop:
             call drawBoulder
             jmp infloop
+
+    moveUp:
+        mov curBoulderXY, dx
+        mov dx, 010bh
+        mov ecx, 4
+        mov isJumpFall, 1
+        jumpLoop:
+            call drawDino
+            dec dl
+            call drawDino
+            call delayy
+            mov curDinoXY, dx
+            mov dx, curBoulderXY
+            cmp dh, 00h 
+            jle slideStopp
+            l3:
+            call drawBoulder
+            dec dh
+            call drawBoulder
+            call delayy
+            mov curBoulderXY, dx
+            mov dx, curDinoXY
+        loop jumpLoop
+        mov ecx, 4
+        mov isJumpFall, 0
+        fallLoop:
+            call drawDino
+            inc dl
+            call drawDino
+            call Delayy
+            mov curDinoXY, dx
+            mov dx, curBoulderXY
+            cmp dh, 00h 
+            jle slideStopp
+            l4:
+            call drawBoulder
+            dec dh
+            call drawBoulder
+            call delayy
+            mov curBoulderXY, dx
+            mov dx, curDinoXY
+        loop fallLoop
+        mov dx, curBoulderXY
+        jmp l1
+
+        slideStopp:
+            mov dx, 0f0bh
+            call drawBoulder
+            mov al, isJumpFall
+            cmp al, 1
+            je l3
+            jmp l4
+            
 main ENDP
 
-moveUp PROC
-    mov dx, 010bh
-    mov ecx, 4
-    jumpLoop:
-        call drawDino
-        dec dl
-        call drawDino
-        call delay
-    loop jumpLoop
-    mov ecx, 4
-    fallLoop:
-        call drawDino
-        inc dl
-        call drawDino
-        call Delay
-    loop fallLoop
-    pop dx
-    jmp l1
-moveUp ENDP
+
+
+delayy PROC
+    push cx            
+    mov ecx, 20000  
+    delay_loop:
+        nop             
+        loop delay_loop
+    pop cx
+    ret
+Delayy ENDP
 
 Delay PROC
     push cx            
     mov ecx, 65500  
-    delay_loop:
+    delay1:
         nop             
-        loop delay_loop
+        loop delay1
     pop cx
     ret
 Delay ENDP
