@@ -1,4 +1,5 @@
-
+;todo: random interval for obstacles spawning
+; - mainmenu, points, gameover screen, leaderboard, pause
 
 .model small
 .386
@@ -40,7 +41,7 @@ main PROC
     mov curDinoXY, dx
 
     infloop:
-        mov dx, 0f0bh
+        mov dx, 160bh
         call drawBoulder
         l1:
             cmp dh, 00h
@@ -57,7 +58,6 @@ main PROC
         slideStop:
             call drawBoulder
             jmp infloop
-    
     
     moveUp:
         mov curBoulderXY, dx
@@ -107,7 +107,7 @@ main PROC
 
         slideStopp:
             call drawBoulder
-            mov dx, 0f0bh
+            mov dx, 160bh
             call drawBoulder
             mov al, isJumpFall
             cmp al, 1
@@ -171,6 +171,7 @@ ReadChar ENDP
 
 drawDino PROC
     call calcXY
+    lea si, dino
     call drawImg
     ret
 drawDino ENDP
@@ -188,6 +189,7 @@ ReadCharWithTimeout ENDP
 
 drawBoulder PROC
     call calcXY
+    lea si, boulder
     call drawImg
     ret
 drawBoulder ENDP
@@ -209,8 +211,7 @@ calcXY PROC
 calcXY ENDP
 
 drawImg PROC
-    push cx
-    lea si, BitmapTest  
+    push cx 
     mov ax, 0A000h  
     mov es, ax     
     mov cl, 15
@@ -227,14 +228,13 @@ drawImg PROC
         jnz x_axis
     pop di
     add di, 320
-    inc bl
     dec cl 
     jnz y_axis
     pop cx
     ret
 drawImg ENDP
 
-BitmapTest:             
+dino:             
     DB 00h,00h,00h,0Bh,0Bh,0Bh,0Bh,0BH,0BH,0BH,0BH,0BH,0BH,00h,00h   
     DB 00h,0BH,0BH,09H,09H,09H,09H,09H,09H,09H,09H,01H,01H,0BH,00h    
     DB 0BH,01H,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,01H,01H,0BH    
@@ -249,5 +249,23 @@ BitmapTest:
     DB 00h,0BH,09H,09H,09H,09H,09H,09H,09H,09H,09H,0BH,00h,00h,00h    
     DB 00h,0BH,0BH,09H,09H,09H,0BH,0BH,0BH,09H,09H,0BH,00h,00h,00h    
     DB 00h,00h,0BH,0BH,0BH,09H,0BH,00h,0BH,09H,0BH,00h,00h,00h,00h    
-    DB 00h,00h,00h,00h,0BH,0BH,0BH,00h,0BH,0BH,0BH,00h,00h,00h,00h    
+    DB 00h,00h,00h,00h,0BH,0BH,0BH,00h,0BH,0BH,0BH,00h,00h,00h,00h
+
+boulder:
+    DB 00h,00h,00h,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h,00h,00h,00h   
+    DB 00h,00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0ch,0ch,00h,0ch,00h,0ch,0ch,0ch,00h,00h,00h,00h,00h    
+    DB 00h,0ch,0ch,0ch,0ch,0ch,00h,00h,0ch,0ch,00h,00h,00h,00h,00h   
+    DB 00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h    
+    DB 00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h  
+    DB 0ch,0ch,0ch,0ch,0ch,0ch,1eh,0ch,0ch,0ch,0ch,0ch,00h,00h,00h   
+    DB 0ch,0ch,1fh,1eh,0ch,0ch,1fh,1eh,0ch,0ch,0ch,0ch,0ch,00h,00h  
+    DB 0ch,1fh,1fh,1eh,1eh,0ch,1fh,1fh,1eh,0ch,0ch,0ch,1eh,0ch,0dh  
+    DB 1dh,1fh,1fh,1fh,1eh,1eh,1fh,1fh,1eh,1eh,0ch,1eh,1eh,1eh,1dh    
+    DB 1dh,1fh,1fh,1fh,1eh,1eh,1fh,1fh,1eh,1eh,1eh,1eh,1eh,1fh,1dh    
+    DB 1dh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1eh,1eh,1eh,1fh,1fh,1dh    
+    DB 1dh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1dh    
+    DB 00h,1dh,1fh,1fh,1fh,1fh,1fh,1fh,1fh,1dh,1fh,1fh,1fh,1dh,00h    
+    DB 00h,00h,1dh,1dh,1dh,1dh,1dh,1dh,1dh,1dh,1dh,1dh,1dh,00h,00h
+    
 END main
