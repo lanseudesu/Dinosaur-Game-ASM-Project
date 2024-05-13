@@ -1,4 +1,4 @@
-;todo: fix boulder sprite that still prints at last pos
+
 
 .model small
 .386
@@ -8,6 +8,7 @@
     curDinoXY dw 0
     curBoulderXY dw 0
     isJumpFall db 0
+    strGameOver db 'haha loser$'
 .code
 
 main PROC
@@ -36,6 +37,7 @@ main PROC
     mov word ptr [si], 010bh    
     mov dx, word ptr [si]
     call drawDino 
+    mov curDinoXY, dx
 
     infloop:
         mov dx, 0f0bh
@@ -50,11 +52,13 @@ main PROC
             dec dh
             call drawBoulder
             call Delay
+            call checkCollision
             jmp l1
         slideStop:
             call drawBoulder
             jmp infloop
-
+    
+    
     moveUp:
         mov curBoulderXY, dx
         mov dx, 010bh
@@ -74,6 +78,7 @@ main PROC
             dec dh
             call drawBoulder
             call delayy
+            call checkCollision
             mov curBoulderXY, dx
             mov dx, curDinoXY
         loop jumpLoop
@@ -93,6 +98,7 @@ main PROC
             dec dh
             call drawBoulder
             call delayy
+            call checkCollision
             mov curBoulderXY, dx
             mov dx, curDinoXY
         loop fallLoop
@@ -100,6 +106,7 @@ main PROC
         jmp l1
 
         slideStopp:
+            call drawBoulder
             mov dx, 0f0bh
             call drawBoulder
             mov al, isJumpFall
@@ -109,11 +116,28 @@ main PROC
             
 main ENDP
 
+checkCollision PROC
+    push bx
+    mov bx, curDinoXY
+    cmp bl, dl
+    jne noCollision
+    cmp bh, dh
+    jne noCollision
+    pop bx
+    jmp gameOver
 
+    noCollision:
+        pop bx
+        ret
+
+    gameOver:
+        mov ah, 4CH
+        int 21h
+checkCollision ENDP
 
 delayy PROC
     push cx            
-    mov ecx, 20000  
+    mov ecx, 35000  
     delay_loop:
         nop             
         loop delay_loop
@@ -127,6 +151,10 @@ Delay PROC
     delay1:
         nop             
         loop delay1
+    mov ecx, 15000
+    delay2:
+        nop
+        loop delay2
     pop cx
     ret
 Delay ENDP
@@ -150,11 +178,11 @@ drawDino ENDP
 ReadCharWithTimeout PROC
     mov ah, 1   
     int 16h
-    jz NoKey        
+    jz noKey        
     mov ah, 0       
     int 16h
     ret
-    NoKey:
+    noKey:
     ret
 ReadCharWithTimeout ENDP
 
@@ -222,5 +250,4 @@ BitmapTest:
     DB 00h,0BH,0BH,09H,09H,09H,0BH,0BH,0BH,09H,09H,0BH,00h,00h,00h    
     DB 00h,00h,0BH,0BH,0BH,09H,0BH,00h,0BH,09H,0BH,00h,00h,00h,00h    
     DB 00h,00h,00h,00h,0BH,0BH,0BH,00h,0BH,0BH,0BH,00h,00h,00h,00h    
-
 END main
