@@ -5,7 +5,9 @@
 .386
 .stack 1024
 .data
-    include sprite.inc
+    include sprite.inc       ; sprite related procs
+    include fifteen.inc      ; 15x15 sprites
+    include alphabet.inc     ; 10x10 letters
     DinoXY dw 960 dup (?)    ; dh = x, dl = y
     curDinoXY dw 0           ; cur = current
     curBoulderXY dw 0
@@ -57,6 +59,7 @@ main PROC
         slideStop:
             call drawBoulder
             jmp infloop
+
     ; dino jump while still continuing obstacle slide
     moveUp: 
         mov curBoulderXY, dx ; preserve current boulder pos
@@ -134,39 +137,22 @@ checkCollision PROC
         call drawDino
         mov al, 1       ; flag for dead dino sprite
         call drawDino   ; draw dead dino sprite
-        mov dx, 0604h
-        lea si, bigg
-        call printLetter ; prints game over screen
-        mov dx, 0704h
-        lea si, biga
-        call printLetter
-        mov dx, 0804h
-        lea si, bigm
-        call printLetter
-        mov dx, 0904h
-        lea si, bige
-        call printLetter
-        mov dx, 0b04h
-        lea si, bigo
-        call printLetter
-        mov dx, 0c04h
-        lea si, bigv
-        call printLetter
-        mov dx, 0d04h
-        lea si, bige
-        call printLetter
-        mov dx, 0e04h
-        lea si, bigr
-        call printLetter
+        call gameOverScreen
+        mov cl, 4
+        mov dx, 0e0ah
+        readcharacter:
+            call ReadChar
+            call checkInput
+            push si
+            lea si, blank
+            call printSmallLetter
+            pop si
+            call printSmallLetter
+            inc dh
+        loop readcharacter
         mov ah, 4CH
         int 21h
 checkCollision ENDP
-
-printLetter PROC
-    call calcXY
-    call drawImg
-    ret
-printLetter ENDP
 
 delayy PROC
     push cx            
@@ -193,12 +179,8 @@ Delay PROC
 Delay ENDP
 
 ReadChar PROC
-    mov ah, 09H        
-    int 16h            
-    jz @F               
-    mov ah, 00h         
-    int 16h 
-@@:    
+    mov ah, 07h
+    int 21h
     ret
 ReadChar ENDP
 
