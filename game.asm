@@ -1,4 +1,5 @@
-;todo: random interval for obstacles spawning
+; todo: fix bad counter, shorten sprite related procs
+; -  random interval for obstacles spawning
 ; - mainmenu, points, gameover screen, leaderboard, pause
 
 .model small
@@ -12,6 +13,9 @@
     curDinoXY dw 0           ; cur = current
     curBoulderXY dw 0
     isJumpFall db 0          ; is dino jumping or falling flag
+    curScore dw 960 dup (?)
+    ones db 0
+    newOnes db 0
 .code
 
 main PROC
@@ -25,9 +29,13 @@ main PROC
     mov es, ax
     ; cyan bg color
     xor di, di         
-    mov cx, 320*200     
+    mov cx, 320*180     
 
     mov al, 0Bh         
+    rep stosb   
+
+    mov cx, 320*20     
+    mov al, 02h         ; grass
     rep stosb   
     
     mov ax, @data
@@ -36,11 +44,14 @@ main PROC
     mov curBoulderXY, 0
     mov curDinoXY, 0
     mov isJumpFall, 0
+    mov curScore, 0
+    mov ones, 0
+    mov newOnes, 0
     ; draw default dino pos
     mov dx, 010bh
     call drawDino 
     mov curDinoXY, dx
-
+    call drawOnes
     infloop:
         mov dx, 160bh
         call drawBoulder
@@ -58,6 +69,7 @@ main PROC
             jmp l1
         slideStop:
             call drawBoulder
+            call drawOnes
             jmp infloop
 
     ; dino jump while still continuing obstacle slide
@@ -109,6 +121,7 @@ main PROC
 
         slideStopp:
             call drawBoulder
+            call drawOnes
             mov dx, 160bh
             call drawBoulder
             mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end

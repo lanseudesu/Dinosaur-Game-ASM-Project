@@ -316,3 +316,109 @@ gameOverScreen PROC ; prints game over screen
     call printSmallLetter
     ret
 gameOverScreen ENDP
+
+drawOnes proc
+    mov dx, 1d00h
+    mov al, ones
+    cmp al, 0
+    je print0
+    cmp al, 1
+    je print1
+    cmp al, 2
+    je print2
+    cmp al, 3
+    je print3
+    cmp al, 4
+    je print4
+    cmp al, 5
+    je print5
+    cmp al, 6
+    je print6
+    cmp al, 7
+    je print7
+    cmp al, 8
+    je print8
+    cmp al, 9
+    je print9
+
+    print0:
+    mov ah, newOnes
+    cmp ah, 1
+    je new0
+    lea si, blank2
+    call printSmallLetter
+    jmp end0
+    new0:
+    lea si, num9
+    call printSmallLetter
+    end0:
+    lea si, num0
+    call printSmallLetter
+    inc ones
+    ret
+    print1:
+    lea si, num0
+    call printSmallLetter
+    lea si, num1
+    call printSmallLetter
+    inc ones
+    ret
+    print2:
+    lea si, num1
+    call printSmallLetter
+    lea si, num2
+    call printSmallLetter
+    inc ones
+    ret
+    print3:
+    lea si, num2
+    call printSmallLetter
+    lea si, num3
+    call printSmallLetter
+    inc ones
+    ret
+    print4:
+    lea si, num3
+    call printSmallLetter
+    lea si, num4
+    call printSmallLetter
+    inc ones
+    ret
+    print5:
+    lea si, num4
+    call printSmallLetter
+    lea si, num5
+    call printSmallLetter
+    inc ones
+    ret
+    print6:
+    lea si, num5
+    call printSmallLetter
+    lea si, num6
+    call printSmallLetter
+    inc ones
+    ret
+    print7:
+    lea si, num6
+    call printSmallLetter
+    lea si, num7
+    call printSmallLetter
+    inc ones
+    ret
+    print8:
+    lea si, num7
+    call printSmallLetter
+    lea si, num8
+    call printSmallLetter
+    inc ones
+    ret
+    print9:
+    lea si, num8
+    call printSmallLetter
+    lea si, num9
+    call printSmallLetter
+    mov newOnes, 1
+    mov ones, 0
+    ret
+drawOnes endp
+
