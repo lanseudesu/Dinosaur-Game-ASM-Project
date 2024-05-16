@@ -1,0 +1,123 @@
+[W]: START
+
+[
+BitmapTest:                         
+DB 0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h   
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h   
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h   
+DB 0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+DB 0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h
+
+W
+BitmapTest:             
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh   
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh   
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh   
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh
+DB 0bh,0bh,00h,00h,0bh,0bh,00h,00h,0bh,0bh   
+DB 0bh,0bh,00h,0bh,0bh,0bh,00h,0bh,0bh,00h   
+DB 0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h,00h  
+DB 00h,0bh,0bh,00h,00h,0bh,0bh,00h,00h,00h
+
+]
+BitmapTest:                         
+DB 00h,00h,00h,00h,00h,00h,00h,00h,0bh,0bh
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh   
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh   
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh  
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh   
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,0bh  
+DB 00h,00h,00h,00h,00h,00h,00h,00h,0bh,0bh
+
+:
+BitmapTest:                         
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h  
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+DB 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h 
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+
+
+S
+DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
+DB 00h,0bh,0bh,00h,00h,00h,00h,00h,00h,00h
+DB 00h,0bh,0bh,00h,00h,00h,00h,00h,00h,00h
+DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
+DB 00h,00h,00h,00h,00h,00h,0bh,0bh,00h,00h
+DB 00h,00h,00h,00h,00h,00h,0bh,0bh,00h,00h
+DB 00h,00h,00h,00h,00h,00h,0bh,0bh,00h,00h
+DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h
+
+
+T
+BitmapTest:             
+DB 0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h
+DB 0bh,0bh,00h,0bh,0bh,0bh,00h,0bh,0bh,00h
+DB 0bh,0bh,00h,0bh,0bh,0bh,00h,0bh,0bh,00h   
+DB 0bh,00h,00h,0bh,0bh,0bh,00h,00h,0bh,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h  
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+
+A
+BitmapTest:             
+DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h
+DB 00h,00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h
+DB 00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,00h
+DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h
+DB 00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h   
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h   
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h  
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h
+
+R
+BitmapTest:                         
+DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h,00h
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h   
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h   
+DB 00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h,00h   
+DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+DB 00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,00h,00h   
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h   
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h  
+DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h
+
+T
+BitmapTest:             
+DB 0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h
+DB 0bh,0bh,00h,0bh,0bh,0bh,00h,0bh,0bh,00h
+DB 0bh,0bh,00h,0bh,0bh,0bh,00h,0bh,0bh,00h   
+DB 0bh,00h,00h,0bh,0bh,0bh,00h,00h,0bh,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h   
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h  
+DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+
+
+
+
