@@ -22,6 +22,12 @@
 
     tens db 0           
     newTens db 0
+
+    hundreds db 0
+    newHundreds db 0
+
+    thousands db 0
+    newThousands db 0
 .code
 
 main PROC
@@ -56,7 +62,10 @@ main PROC
     mov newOnes, 0
     mov tens, 0
     mov newTens, 0
-
+    mov hundreds, 0
+    mov newHundreds, 0
+    mov thousands, 0
+    mov newThousands, 0
 
     ; draw default dino pos
     mov dx, 010bh
@@ -66,15 +75,21 @@ main PROC
     mov dx, 1c00h
     lea si, num0
     call printSmallLetter
+    mov dx, 1b00h
+    lea si, num0
+    call printSmallLetter
+    mov dx, 1a00h
+    lea si, num0
+    call printSmallLetter
     infloop:
         mov dx, 160bh
         call drawBoulder
         l1:
             cmp dh, 00h
             jle slideStop
-            cmp dh, 0Bh
-            je incOnes
-        l2:
+            ;cmp dh, 0Bh
+            ;je incOnes
+        ;l2:
             call ReadCharWithTimeout ; waits for user input 
             cmp al, 'w' 
             je moveUp
@@ -83,17 +98,20 @@ main PROC
             call drawBoulder
             call Delay
             ;call checkCollision
-            jmp l1
-
-        incOnes:
             mov curBoulderXY, dx
             call drawOnes
             mov dx, curBoulderXY
-            jmp l2
+            jmp l1
+
+        ;incOnes:
+            ;mov curBoulderXY, dx
+            ;call drawOnes
+            ;mov dx, curBoulderXY
+            ;jmp l2
 
         slideStop:
             call drawBoulder
-            call drawOnes
+            ;call drawOnes
             jmp infloop
 
     ; dino jump while still continuing obstacle slide
@@ -203,14 +221,15 @@ Delayy ENDP
 
 Delay PROC
     push cx            
-    mov ecx, 65500   ; delay speed
+    ;mov ecx, 65500   ; delay speed
+    mov ecx, 35000
     delay1:
         nop             
         loop delay1
-    mov ecx, 15000   ; delay speed
-    delay2:
-        nop
-        loop delay2
+    ;mov ecx, 15000   ; delay speed
+    ;delay2:
+        ;nop
+        ;loop delay2
     pop cx
     ret
 Delay ENDP

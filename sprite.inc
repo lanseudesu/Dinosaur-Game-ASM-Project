@@ -457,8 +457,26 @@ drawTens proc
     je print90
 
     print00:
+    mov ah, newTens
+    cmp ah, 1
+    je new00
+    lea si, blank2
+    call printSmallLetter
+    jmp end00
+    new00:
     lea si, num9
     call printSmallLetter
+    mov ah, newHundreds
+    cmp ah, 1
+    je noIncHundreds
+    inc hundreds
+    call drawHundreds
+    jmp end00
+    noIncHundreds:
+    call drawHundreds
+    mov newHundreds, 0
+    end00:
+    mov dx, 1c00h
     lea si, num0
     call printSmallLetter
     ret
@@ -519,3 +537,197 @@ drawTens proc
     mov tens, 0
     ret
 drawTens endp
+
+drawHundreds proc
+    mov dx, 1b00h
+    mov al, hundreds
+    cmp al, 0
+    je print000
+    cmp al, 1
+    je print100
+    cmp al, 2
+    je print200
+    cmp al, 3
+    je print300
+    cmp al, 4
+    je print400
+    cmp al, 5
+    je print500
+    cmp al, 6
+    je print600
+    cmp al, 7
+    je print700
+    cmp al, 8
+    je print800
+    cmp al, 9
+    je print900
+
+    print000:
+    mov ah, newHundreds
+    cmp ah, 1
+    je new000
+    lea si, blank2
+    call printSmallLetter
+    jmp end000
+    new000:
+    lea si, num9
+    call printSmallLetter
+    mov ah, newThousands
+    cmp ah, 1
+    je noIncThousands
+    inc thousands
+    call drawThousands
+    jmp end000
+    noIncThousands:
+    call drawThousands
+    mov newThousands, 0
+    end000:
+    mov dx, 1b00h
+    lea si, num0
+    call printSmallLetter
+    ret
+    print100:
+    lea si, num0
+    call printSmallLetter
+    lea si, num1
+    call printSmallLetter
+    ret
+    print200:
+    lea si, num1
+    call printSmallLetter
+    lea si, num2
+    call printSmallLetter
+    ret
+    print300:
+    lea si, num2
+    call printSmallLetter
+    lea si, num3
+    call printSmallLetter
+    ret
+    print400:
+    lea si, num3
+    call printSmallLetter
+    lea si, num4
+    call printSmallLetter
+    ret
+    print500:
+    lea si, num4
+    call printSmallLetter
+    lea si, num5
+    call printSmallLetter
+    ret
+    print600:
+    lea si, num5
+    call printSmallLetter
+    lea si, num6
+    call printSmallLetter
+    ret
+    print700:
+    lea si, num6
+    call printSmallLetter
+    lea si, num7
+    call printSmallLetter
+    ret
+    print800:
+    lea si, num7
+    call printSmallLetter
+    lea si, num8
+    call printSmallLetter
+    ret
+    print900:
+    lea si, num8
+    call printSmallLetter
+    lea si, num9
+    call printSmallLetter
+    mov newHundreds, 1
+    mov hundreds, 0
+    ret
+drawHundreds endp
+
+drawThousands proc
+    mov dx, 1a00h
+    mov al, thousands
+    cmp al, 0
+    je print0000
+    cmp al, 1
+    je print1000
+    cmp al, 2
+    je print2000
+    cmp al, 3
+    je print3000
+    cmp al, 4
+    je print4000
+    cmp al, 5
+    je print5000
+    cmp al, 6
+    je print6000
+    cmp al, 7
+    je print7000
+    cmp al, 8
+    je print8000
+    cmp al, 9
+    je print9000
+
+    print0000:
+    lea si, num9
+    call printSmallLetter
+    lea si, num0
+    call printSmallLetter
+    ret
+    print1000:
+    lea si, num0
+    call printSmallLetter
+    lea si, num1
+    call printSmallLetter
+    ret
+    print2000:
+    lea si, num1
+    call printSmallLetter
+    lea si, num2
+    call printSmallLetter
+    ret
+    print3000:
+    lea si, num2
+    call printSmallLetter
+    lea si, num3
+    call printSmallLetter
+    ret
+    print4000:
+    lea si, num3
+    call printSmallLetter
+    lea si, num4
+    call printSmallLetter
+    ret
+    print5000:
+    lea si, num4
+    call printSmallLetter
+    lea si, num5
+    call printSmallLetter
+    ret
+    print6000:
+    lea si, num5
+    call printSmallLetter
+    lea si, num6
+    call printSmallLetter
+    ret
+    print7000:
+    lea si, num6
+    call printSmallLetter
+    lea si, num7
+    call printSmallLetter
+    ret
+    print8000:
+    lea si, num7
+    call printSmallLetter
+    lea si, num8
+    call printSmallLetter
+    ret
+    print9000:
+    lea si, num8
+    call printSmallLetter
+    lea si, num9
+    call printSmallLetter
+    mov newThousands, 1
+    mov thousands, 0
+    ret
+drawThousands endp
