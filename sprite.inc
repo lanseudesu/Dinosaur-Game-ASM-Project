@@ -347,6 +347,7 @@ drawOnes proc
     je new0
     lea si, blank2
     call printSmallLetter
+    ;inc score
     jmp end0
     new0:
     lea si, num9
@@ -356,10 +357,12 @@ drawOnes proc
     je noIncTens
     inc tens
     call drawTens
+    inc score
     jmp end0
     noIncTens:
     call drawTens
     mov newTens, 0
+    inc score
     end0:
     mov dx, 1d00h
     lea si, num0
@@ -372,6 +375,7 @@ drawOnes proc
     lea si, num1
     call printSmallLetter
     inc ones
+    inc score
     ret
     print2:
     lea si, num1
@@ -379,6 +383,7 @@ drawOnes proc
     lea si, num2
     call printSmallLetter
     inc ones
+    inc score
     ret
     print3:
     lea si, num2
@@ -386,6 +391,7 @@ drawOnes proc
     lea si, num3
     call printSmallLetter
     inc ones
+    inc score
     ret
     print4:
     lea si, num3
@@ -393,6 +399,7 @@ drawOnes proc
     lea si, num4
     call printSmallLetter
     inc ones
+    inc score
     ret
     print5:
     lea si, num4
@@ -400,6 +407,7 @@ drawOnes proc
     lea si, num5
     call printSmallLetter
     inc ones
+    inc score
     ret
     print6:
     lea si, num5
@@ -407,6 +415,7 @@ drawOnes proc
     lea si, num6
     call printSmallLetter
     inc ones
+    inc score
     ret
     print7:
     lea si, num6
@@ -414,6 +423,7 @@ drawOnes proc
     lea si, num7
     call printSmallLetter
     inc ones
+    inc score
     ret
     print8:
     lea si, num7
@@ -421,6 +431,7 @@ drawOnes proc
     lea si, num8
     call printSmallLetter
     inc ones
+    inc score
     ret
     print9:
     lea si, num8
@@ -429,6 +440,7 @@ drawOnes proc
     call printSmallLetter
     mov newOnes, 1
     mov ones, 0
+    inc score
     ret
 drawOnes endp
 

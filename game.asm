@@ -1,4 +1,4 @@
-; todo: fix bad counter, shorten sprite related procs
+; todo: shorten sprite related procs
 ; - random interval for obstacles spawning
 ; - mainmenu, points, gameover screen, leaderboard, pause
 
@@ -28,6 +28,9 @@
 
     thousands db 0
     newThousands db 0
+
+    score db 0
+    score2 db 0
 .code
 
 main PROC
@@ -53,22 +56,8 @@ main PROC
     mov ax, @data
     mov ds, ax 
 
-    ; var init
-    mov curBoulderXY, 0
-    mov curDinoXY, 0
-    mov isJumpFall, 0
-    mov curScore, 0
-    mov ones, 0
-    mov newOnes, 0
-    mov tens, 0
-    mov newTens, 0
-    mov hundreds, 0
-    mov newHundreds, 0
-    mov thousands, 0
-    mov newThousands, 0
-
     ; draw default dino pos
-    mov dx, 010bh
+    mov dx, 120bh
     call drawDino 
     mov curDinoXY, dx
     call drawOnes
@@ -97,7 +86,7 @@ main PROC
             dec dh
             call drawBoulder
             call Delay
-            ;call checkCollision
+            call checkCollision
             mov curBoulderXY, dx
             call drawOnes
             mov dx, curBoulderXY
@@ -205,9 +194,77 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
+        call printScore2
+        call printScore
         mov ah, 4CH
         int 21h
 checkCollision ENDP
+
+printScore proc
+    mov score, 14
+    mov ax, 0
+    mov al, score
+    mov bl, 10
+    div bl
+
+    mov dh, ah
+    cmp al, 0
+    je skipTens
+
+    add al, '0'
+    mov dl, al
+    mov ah, 02h
+    int 21h
+
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+
+    skipTens:
+    mov dl, '0'
+    mov ah, 02h
+    int 21h
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+printScore endp
+
+printScore2 proc
+    mov score2, 08
+    mov ax, 0
+    mov al, score2
+    mov bl, 10
+    div bl
+
+    mov dh, ah
+    cmp al, 0
+    je skipHundreds
+
+    add al, '0'
+    mov dl, al
+    mov ah, 02h
+    int 21h
+
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+
+    skipHundreds:
+    mov dl, '0'
+    mov ah, 02h
+    int 21h
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+printScore2 endp
 
 delayy PROC
     push cx            
@@ -221,15 +278,14 @@ Delayy ENDP
 
 Delay PROC
     push cx            
-    ;mov ecx, 65500   ; delay speed
-    mov ecx, 35000
+    mov ecx, 65500   ; delay speed
     delay1:
         nop             
         loop delay1
-    ;mov ecx, 15000   ; delay speed
-    ;delay2:
-        ;nop
-        ;loop delay2
+    mov ecx, 15000   ; delay speed
+    delay2:
+        nop
+        loop delay2
     pop cx
     ret
 Delay ENDP
