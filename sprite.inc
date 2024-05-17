@@ -351,7 +351,17 @@ drawOnes proc
     new0:
     lea si, num9
     call printSmallLetter
+    mov ah, newtens
+    cmp ah, 1
+    je noIncTens
+    inc tens
+    call drawTens
+    jmp end0
+    noIncTens:
+    call drawTens
+    mov newTens, 0
     end0:
+    mov dx, 1d00h
     lea si, num0
     call printSmallLetter
     inc ones
@@ -422,3 +432,90 @@ drawOnes proc
     ret
 drawOnes endp
 
+drawTens proc
+    mov dx, 1c00h
+    mov al, tens
+    cmp al, 0
+    je print00
+    cmp al, 1
+    je print10
+    cmp al, 2
+    je print20
+    cmp al, 3
+    je print30
+    cmp al, 4
+    je print40
+    cmp al, 5
+    je print50
+    cmp al, 6
+    je print60
+    cmp al, 7
+    je print70
+    cmp al, 8
+    je print80
+    cmp al, 9
+    je print90
+
+    print00:
+    lea si, num9
+    call printSmallLetter
+    lea si, num0
+    call printSmallLetter
+    ret
+    print10:
+    lea si, num0
+    call printSmallLetter
+    lea si, num1
+    call printSmallLetter
+    ret
+    print20:
+    lea si, num1
+    call printSmallLetter
+    lea si, num2
+    call printSmallLetter
+    ret
+    print30:
+    lea si, num2
+    call printSmallLetter
+    lea si, num3
+    call printSmallLetter
+    ret
+    print40:
+    lea si, num3
+    call printSmallLetter
+    lea si, num4
+    call printSmallLetter
+    ret
+    print50:
+    lea si, num4
+    call printSmallLetter
+    lea si, num5
+    call printSmallLetter
+    ret
+    print60:
+    lea si, num5
+    call printSmallLetter
+    lea si, num6
+    call printSmallLetter
+    ret
+    print70:
+    lea si, num6
+    call printSmallLetter
+    lea si, num7
+    call printSmallLetter
+    ret
+    print80:
+    lea si, num7
+    call printSmallLetter
+    lea si, num8
+    call printSmallLetter
+    ret
+    print90:
+    lea si, num8
+    call printSmallLetter
+    lea si, num9
+    call printSmallLetter
+    mov newTens, 1
+    mov tens, 0
+    ret
+drawTens endp
