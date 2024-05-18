@@ -340,31 +340,21 @@ drawOnes proc
     je print8
     cmp al, 9
     je print9
+    cmp al, 10
+    je goback0
 
-    print0:
-    mov ah, newOnes
-    cmp ah, 1
-    je new0
-    lea si, blank2
-    call printSmallLetter
-    ;inc score
-    jmp end0
-    new0:
+    goback0:
     lea si, num9
     call printSmallLetter
-    mov ah, newtens
-    cmp ah, 1
-    je noIncTens
+    lea si, num0
+    call printSmallLetter
+    mov ones, 1
     inc tens
     call drawTens
-    inc score
-    jmp end0
-    noIncTens:
-    call drawTens
-    mov newTens, 0
-    inc score
-    end0:
-    mov dx, 1d00h
+    ret
+    print0:
+    lea si, blank2
+    call printSmallLetter
     lea si, num0
     call printSmallLetter
     inc ones
@@ -375,7 +365,6 @@ drawOnes proc
     lea si, num1
     call printSmallLetter
     inc ones
-    inc score
     ret
     print2:
     lea si, num1
@@ -383,7 +372,6 @@ drawOnes proc
     lea si, num2
     call printSmallLetter
     inc ones
-    inc score
     ret
     print3:
     lea si, num2
@@ -391,7 +379,6 @@ drawOnes proc
     lea si, num3
     call printSmallLetter
     inc ones
-    inc score
     ret
     print4:
     lea si, num3
@@ -399,7 +386,6 @@ drawOnes proc
     lea si, num4
     call printSmallLetter
     inc ones
-    inc score
     ret
     print5:
     lea si, num4
@@ -407,7 +393,6 @@ drawOnes proc
     lea si, num5
     call printSmallLetter
     inc ones
-    inc score
     ret
     print6:
     lea si, num5
@@ -415,7 +400,6 @@ drawOnes proc
     lea si, num6
     call printSmallLetter
     inc ones
-    inc score
     ret
     print7:
     lea si, num6
@@ -423,7 +407,6 @@ drawOnes proc
     lea si, num7
     call printSmallLetter
     inc ones
-    inc score
     ret
     print8:
     lea si, num7
@@ -431,7 +414,6 @@ drawOnes proc
     lea si, num8
     call printSmallLetter
     inc ones
-    inc score
     ret
     print9:
     lea si, num8
@@ -439,8 +421,7 @@ drawOnes proc
     lea si, num9
     call printSmallLetter
     mov newOnes, 1
-    mov ones, 0
-    inc score
+    inc ones
     ret
 drawOnes endp
 
@@ -467,28 +448,21 @@ drawTens proc
     je print80
     cmp al, 9
     je print90
+    cmp al, 10
+    je goback00
 
-    print00:
-    mov ah, newTens
-    cmp ah, 1
-    je new00
-    lea si, blank2
-    call printSmallLetter
-    jmp end00
-    new00:
+    goback00:
     lea si, num9
     call printSmallLetter
-    mov ah, newHundreds
-    cmp ah, 1
-    je noIncHundreds
+    lea si, num0
+    call printSmallLetter
+    mov tens, 0
     inc hundreds
     call drawHundreds
-    jmp end00
-    noIncHundreds:
-    call drawHundreds
-    mov newHundreds, 0
-    end00:
-    mov dx, 1c00h
+    ret
+    print00:
+    lea si, blank2
+    call printSmallLetter
     lea si, num0
     call printSmallLetter
     ret
@@ -546,7 +520,6 @@ drawTens proc
     lea si, num9
     call printSmallLetter
     mov newTens, 1
-    mov tens, 0
     ret
 drawTens endp
 
@@ -573,28 +546,21 @@ drawHundreds proc
     je print800
     cmp al, 9
     je print900
+    cmp al, 10
+    je goback000
 
-    print000:
-    mov ah, newHundreds
-    cmp ah, 1
-    je new000
-    lea si, blank2
-    call printSmallLetter
-    jmp end000
-    new000:
+    goback000:
     lea si, num9
     call printSmallLetter
-    mov ah, newThousands
-    cmp ah, 1
-    je noIncThousands
+    lea si, num0
+    call printSmallLetter
+    mov hundreds, 0
     inc thousands
     call drawThousands
-    jmp end000
-    noIncThousands:
-    call drawThousands
-    mov newThousands, 0
-    end000:
-    mov dx, 1b00h
+    ret
+    print000:
+    lea si, blank2
+    call printSmallLetter
     lea si, num0
     call printSmallLetter
     ret
@@ -652,7 +618,6 @@ drawHundreds proc
     lea si, num9
     call printSmallLetter
     mov newHundreds, 1
-    mov hundreds, 0
     ret
 drawHundreds endp
 
@@ -679,7 +644,7 @@ drawThousands proc
     je print8000
     cmp al, 9
     je print9000
-
+    
     print0000:
     lea si, num9
     call printSmallLetter

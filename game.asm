@@ -20,7 +20,7 @@
     ones db 0                ; scores, ones
     newOnes db 0             ; flag if ones is repeatig
 
-    tens db 0           
+    tens db 0         
     newTens db 0
 
     hundreds db 0
@@ -28,9 +28,6 @@
 
     thousands db 0
     newThousands db 0
-
-    score db 0
-    score2 db 0
 .code
 
 main PROC
@@ -57,7 +54,7 @@ main PROC
     mov ds, ax 
 
     ; draw default dino pos
-    mov dx, 120bh
+    mov dx, 010bh
     call drawDino 
     mov curDinoXY, dx
     call drawOnes
@@ -74,33 +71,34 @@ main PROC
         mov dx, 160bh
         call drawBoulder
         l1:
+            ;mov curBoulderXY, dx
+            ;call drawOnes
+            ;mov dx, curBoulderXY
             cmp dh, 00h
             jle slideStop
-            ;cmp dh, 0Bh
-            ;je incOnes
-        ;l2:
+            cmp dh, 0Bh
+            je incOnes
+        l2:
             call ReadCharWithTimeout ; waits for user input 
             cmp al, 'w' 
+            ;je checkCollision
             je moveUp
             call drawBoulder
             dec dh
             call drawBoulder
             call Delay
             call checkCollision
+            jmp l1
+
+        incOnes:
             mov curBoulderXY, dx
             call drawOnes
             mov dx, curBoulderXY
-            jmp l1
-
-        ;incOnes:
-            ;mov curBoulderXY, dx
-            ;call drawOnes
-            ;mov dx, curBoulderXY
-            ;jmp l2
+            jmp l2
 
         slideStop:
             call drawBoulder
-            ;call drawOnes
+            call drawOnes
             jmp infloop
 
     ; dino jump while still continuing obstacle slide
@@ -118,6 +116,8 @@ main PROC
             mov dx, curBoulderXY 
             cmp dh, 00h 
             jle slideStopp        ; if obstacle reaches end then go back to starting pos
+            cmp dh, 0bh
+            je incOnes2
             l3: ; slide
             call drawBoulder
             dec dh
@@ -159,6 +159,17 @@ main PROC
             cmp al, 1
             je l3  ; jumping
             jmp l4 ; falling
+
+        incOnes2:
+            mov curBoulderXY, dx
+            call drawOnes
+            mov dx, curBoulderXY
+            mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end
+            cmp al, 1
+            je l3  ; jumping
+            jmp l4 ; falling
+
+
 main ENDP
 
 checkCollision PROC       
@@ -194,77 +205,33 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
-        call printScore2
         call printScore
         mov ah, 4CH
         int 21h
 checkCollision ENDP
 
 printScore proc
-    mov score, 14
-    mov ax, 0
-    mov al, score
-    mov bl, 10
-    div bl
-
-    mov dh, ah
-    cmp al, 0
-    je skipTens
-
-    add al, '0'
-    mov dl, al
+    dec ones
     mov ah, 02h
+    mov dl, thousands
+    add dl, '0'
     int 21h
-
-    add dh, '0'
-    mov dl, dh
-    mov ah, 02h
+    mov dl, hundreds
+    add dl, '0'
     int 21h
-    ret
-
-    skipTens:
-    mov dl, '0'
-    mov ah, 02h
+    mov dl, tens
+    add dl, '0'
     int 21h
-    add dh, '0'
-    mov dl, dh
-    mov ah, 02h
+    mov dl, ones
+    add dl, '0'
     int 21h
     ret
 printScore endp
 
-printScore2 proc
-    mov score2, 08
-    mov ax, 0
-    mov al, score2
-    mov bl, 10
-    div bl
-
-    mov dh, ah
-    cmp al, 0
-    je skipHundreds
-
-    add al, '0'
-    mov dl, al
-    mov ah, 02h
-    int 21h
-
-    add dh, '0'
-    mov dl, dh
-    mov ah, 02h
-    int 21h
+addNine proc
+    add dl, 9
     ret
-
-    skipHundreds:
-    mov dl, '0'
-    mov ah, 02h
-    int 21h
-    add dh, '0'
-    mov dl, dh
-    mov ah, 02h
-    int 21h
-    ret
-printScore2 endp
+addNine endp
 
 delayy PROC
     push cx            
