@@ -1,5 +1,5 @@
-; todo: fix bad counter, shorten sprite related procs
-; -  random interval for obstacles spawning
+; todo: shorten sprite related procs
+; - random interval for obstacles spawning
 ; - mainmenu, points, gameover screen, leaderboard, pause
 
 .model small
@@ -9,13 +9,28 @@
     include sprite.inc       ; sprite related procs
     include fifteen.inc      ; 15x15 sprites
     include alphabet.inc     ; 10x10 letters
+
     DinoXY dw 960 dup (?)    ; dh = x, dl = y
     curDinoXY dw 0           ; cur = current
     curBoulderXY dw 0
+
     isJumpFall db 0          ; is dino jumping or falling flag
     curScore dw 960 dup (?)
-    ones db 0
-    newOnes db 0
+
+    ones db 0                ; scores, ones
+    newOnes db 0             ; flag if ones is repeatig
+
+    tens db 0           
+    newTens db 0
+
+    hundreds db 0
+    newHundreds db 0
+
+    thousands db 0
+    newThousands db 0
+
+    score db 0
+    score2 db 0
 .code
 
 main PROC
@@ -40,24 +55,30 @@ main PROC
     
     mov ax, @data
     mov ds, ax 
-    ; var init
-    mov curBoulderXY, 0
-    mov curDinoXY, 0
-    mov isJumpFall, 0
-    mov curScore, 0
-    mov ones, 0
-    mov newOnes, 0
+
     ; draw default dino pos
-    mov dx, 010bh
+    mov dx, 120bh
     call drawDino 
     mov curDinoXY, dx
     call drawOnes
+    mov dx, 1c00h
+    lea si, num0
+    call printSmallLetter
+    mov dx, 1b00h
+    lea si, num0
+    call printSmallLetter
+    mov dx, 1a00h
+    lea si, num0
+    call printSmallLetter
     infloop:
         mov dx, 160bh
         call drawBoulder
         l1:
             cmp dh, 00h
             jle slideStop
+            ;cmp dh, 0Bh
+            ;je incOnes
+        ;l2:
             call ReadCharWithTimeout ; waits for user input 
             cmp al, 'w' 
             je moveUp
@@ -66,10 +87,20 @@ main PROC
             call drawBoulder
             call Delay
             call checkCollision
+            mov curBoulderXY, dx
+            call drawOnes
+            mov dx, curBoulderXY
             jmp l1
+
+        ;incOnes:
+            ;mov curBoulderXY, dx
+            ;call drawOnes
+            ;mov dx, curBoulderXY
+            ;jmp l2
+
         slideStop:
             call drawBoulder
-            call drawOnes
+            ;call drawOnes
             jmp infloop
 
     ; dino jump while still continuing obstacle slide
@@ -163,9 +194,77 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
+        call printScore2
+        call printScore
         mov ah, 4CH
         int 21h
 checkCollision ENDP
+
+printScore proc
+    mov score, 14
+    mov ax, 0
+    mov al, score
+    mov bl, 10
+    div bl
+
+    mov dh, ah
+    cmp al, 0
+    je skipTens
+
+    add al, '0'
+    mov dl, al
+    mov ah, 02h
+    int 21h
+
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+
+    skipTens:
+    mov dl, '0'
+    mov ah, 02h
+    int 21h
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+printScore endp
+
+printScore2 proc
+    mov score2, 08
+    mov ax, 0
+    mov al, score2
+    mov bl, 10
+    div bl
+
+    mov dh, ah
+    cmp al, 0
+    je skipHundreds
+
+    add al, '0'
+    mov dl, al
+    mov ah, 02h
+    int 21h
+
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+
+    skipHundreds:
+    mov dl, '0'
+    mov ah, 02h
+    int 21h
+    add dh, '0'
+    mov dl, dh
+    mov ah, 02h
+    int 21h
+    ret
+printScore2 endp
 
 delayy PROC
     push cx            
