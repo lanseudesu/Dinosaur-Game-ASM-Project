@@ -1,6 +1,7 @@
 ; todo: shorten sprite related procs
 ; - random interval for obstacles spawning
-; - mainmenu, points, gameover screen, leaderboard, pause
+; - leaderboard, pause
+; - prettify main menu and gameover
 
 .model small
 .386
@@ -19,7 +20,7 @@
     curScore dw 960 dup (?)
 
     ones db 0                ; scores, ones
-    newOnes db 0             ; flag if ones is repeatig
+    newOnes db 0             ; flag if ones is repeating
 
     tens db 0         
     newTens db 0
@@ -35,6 +36,8 @@
     wid dw 0
     height dw 0
     color db 0
+
+    hearts db 0
 .code
 
 draw macro x, y, w, h, c         
@@ -78,21 +81,30 @@ main PROC
     mov ax, 0013h
     int 10h
 
-    mov ax, 0A000h      
-    mov es, ax
-    ; cyan bg color
-    xor di, di         
-    mov cx, 320*180     
-
-    mov al, 0Bh         
-    rep stosb   
-
-    mov cx, 320*20     
-    mov al, 02h         ; grass
-    rep stosb   
+    call cls
     
     mov ax, @data
     mov ds, ax 
+
+    call menu
+    promptLoop2:
+    call readchar
+    cmp al, 's'
+    je maingame
+    cmp al, 'h'
+    je promptLoop2
+    cmp al, 'x'
+    je exitgame
+    jmp promptLoop2
+
+    exitgame:
+    mov ah, 4CH
+    int 21h
+
+    maingame:
+    call cls
+    mov hearts, 3
+    call drawhearts
 
     ; draw default dino pos
     mov dx, 010bh
@@ -211,7 +223,7 @@ main PROC
             jmp l4 ; falling
 main ENDP
 
-deadcls proc
+cls proc
     mov ax, 0A000h      
     mov es, ax
     ; cyan bg color
@@ -224,7 +236,11 @@ deadcls proc
     mov cx, 320*20     
     mov al, 02h         ; grass
     rep stosb   
+    ret
+cls endp
 
+deadcls proc
+    call cls
     ;draw bracket y
     draw 128, 98, 2, 1, 2ah
     draw 128, 99, 1, 10, 2ah
@@ -263,7 +279,7 @@ deadcls proc
 
     promptLoop:
         cmp al, 'y'
-        je cls
+        je restartGame
         cmp al, 'x'
         je exit
         jmp promptLoop
@@ -273,27 +289,17 @@ deadcls proc
         int 21h
 deadcls endp
 
-cls proc                ; restart game
+restartGame proc                
     mov ones, 0
     mov tens, 0
     mov hundreds, 0
     mov thousands, 0
+    mov hearts, 3
 
     mov ax, @code       
     mov ds, ax
 
-    mov ax, 0A000h      
-    mov es, ax
-    ; cyan bg color
-    xor di, di         
-    mov cx, 320*180     
-
-    mov al, 0Bh         
-    rep stosb   
-
-    mov cx, 320*20     
-    mov al, 02h         ; grass
-    rep stosb   
+    call cls
     
     mov ax, @data
     mov ds, ax 
@@ -312,8 +318,10 @@ cls proc                ; restart game
     lea si, num0
     call printSmallLetter
 
+    call drawhearts
+
     jmp infloop
-cls endp
+restartGame endp
 
 checkCollision PROC       
     push bx
@@ -323,6 +331,7 @@ checkCollision PROC
     cmp bh, dh          ; compare dino x to boulder x
     jne noCollision
     pop bx
+    dec hearts
     jmp gameOver
 
     noCollision: 
@@ -335,7 +344,16 @@ checkCollision PROC
         call drawDino
         mov al, 1       ; flag for dead dino sprite
         call drawDino   ; draw dead dino sprite
+        mov al, hearts
+        cmp al, 0
+        jne reset
+
         call gameOverScreen
+        mov dx, 1600h
+        lea si, heart
+        call printSmallLetter
+        lea si, heart2
+        call printSmallLetter
         mov cl, 4
         mov dx, 0e0ah
         readcharacter:
@@ -350,8 +368,65 @@ checkCollision PROC
         loop readcharacter
         call printScore
         call deadcls
-        mov ah, 4CH
-        int 21h
+
+        minus1:
+            mov dx, 1800h
+            lea si, heart
+            call printSmallLetter
+            lea si, heart2
+            call printSmallLetter
+            call rloop
+
+        minus2:
+            mov dx, 1700h
+            lea si, heart
+            call printSmallLetter
+            lea si, heart2
+            call printSmallLetter
+            call rloop
+
+        reset:
+            mov al, hearts
+            cmp al, 2
+            je minus1
+            cmp al, 1
+            je minus2
+        rloop:
+            mov dx, 0f08h
+            lea si, num3
+            call printSmallLetter
+            call longDelay
+            call longDelay
+            call longDelay
+            call longDelay
+            mov dx, 0f08h
+            lea si, num3
+            call printSmallLetter
+            lea si, num2
+            call printSmallLetter
+            call longDelay
+            call longDelay
+            call longDelay
+            call longDelay
+            mov dx, 0f08h
+            lea si, num2
+            call printSmallLetter
+            lea si, num1
+            call printSmallLetter
+            call longDelay
+            call longDelay
+            call longDelay
+            call longDelay
+            mov dx, 0f08h
+            lea si, num1
+            call printSmallLetter
+            mov dx, 010bh
+            mov al, 1
+            call drawDino 
+            mov al, 0
+            call drawDino
+            mov curDinoXY, dx
+            jmp infloop
 checkCollision ENDP
 
 printScore proc
@@ -395,6 +470,24 @@ Delay PROC
     pop cx
     ret
 Delay ENDP
+
+longDelay proc
+    push cx            
+    mov ecx, 65500   ; delay speed
+    d1:
+        nop             
+        loop d1
+    mov ecx, 65500
+    d2:
+        nop
+        loop d2
+    mov ecx, 65500
+    d3:
+        nop
+        loop d3
+    pop dx
+    ret
+longDelay endp
 
 ReadChar PROC
     mov ah, 07h

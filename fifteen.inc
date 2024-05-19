@@ -36,8 +36,8 @@ dead:
 boulder:
     DB 00h,00h,00h,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h,00h,00h,00h   
     DB 00h,00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h,00h    
-    DB 00h,00h,0ch,0ch,00h,0ch,00h,0ch,0ch,0ch,00h,00h,00h,00h,00h    
-    DB 00h,0ch,0ch,0ch,0ch,0ch,00h,00h,0ch,0ch,00h,00h,00h,00h,00h   
+    DB 00h,00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h    
+    DB 00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h,00h   
     DB 00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h    
     DB 00h,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,0ch,00h,00h,00h,00h  
     DB 0ch,0ch,0ch,0ch,0ch,0ch,1eh,0ch,0ch,0ch,0ch,0ch,00h,00h,00h   
@@ -258,5 +258,85 @@ question:
     DB 00h,00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h
     DB 00h,00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h
     DB 00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h
+bigp:             
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h
+bigh:           
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h
+bigs:            
+    DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h   
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h  
+    DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h   
+    DB 00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h  
+    DB 00h,00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h  
+    DB 00h,00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h
+bigc:         
+    DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h   
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,00h,00h,00h,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h
+bigu:
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h   
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h  
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,00h,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,0bh,0bh,0bh,0bh,00h,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h    
+    DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h    
+    DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h
 
 

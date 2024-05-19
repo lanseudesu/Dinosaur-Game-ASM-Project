@@ -368,3 +368,122 @@ tryAgainScreen proc ; prints try again screen
     call printSmallLetter
     ret
 tryAgainScreen endp
+
+drawhearts proc
+    mov dx, 1800h
+    lea si, heart
+    call printSmallLetter
+    mov dx, 1700h
+    lea si, heart
+    call printSmallLetter
+    mov dx, 1600h
+    lea si, heart
+    call printSmallLetter
+    ret
+drawhearts endp
+
+menu proc
+    mov dx, 0503h
+    lea si, bigp
+    call printLetter
+    mov dx, 0603h
+    lea si, bigr
+    call printLetter
+    mov dx, 0703h
+    lea si, bige
+    call printLetter
+    mov dx, 0803h
+    lea si, bigh
+    call printLetter
+    mov dx, 0903h
+    lea si, bigi
+    call printLetter
+    mov dx, 0a03h
+    lea si, bigs
+    call printLetter
+    mov dx, 0b03h
+    lea si, bigt
+    call printLetter
+    mov dx, 0c03h
+    lea si, bigo
+    call printLetter
+    mov dx, 0d03h
+    lea si, bigr
+    call printLetter
+    mov dx, 0e03h
+    lea si, bigi
+    call printLetter
+    mov dx, 0f03h
+    lea si, bigc
+    call printLetter
+    mov dx, 0d07h
+    lea si, smallr
+    call printSmallLetter
+    mov dx, 0e07h
+    lea si, smallu
+    call printSmallLetter
+    mov dx, 0f07h
+    lea si, smallN
+    call printSmallLetter
+    mov dx, 1007h
+    lea si, smalln
+    call printSmallLetter
+    mov dx, 1107h
+    lea si, smallE
+    call printSmallLetter
+    mov dx, 1207h
+    lea si, smallr
+    call printSmallLetter
+    mov dx, 0e09h
+    lea si, smalls
+    call printSmallLetter
+    mov dx, 0f09h
+    lea si, smallt
+    call printSmallLetter
+    mov dx, 1009h
+    lea si, smalla
+    call printSmallLetter
+    mov dx, 1109h
+    lea si, smallr
+    call printSmallLetter
+    mov dx, 1209h
+    lea si, smallt
+    call printSmallLetter
+    mov dx, 0e0bh
+    lea si, smallh
+    call printSmallLetter
+    mov dx, 0f0bh
+    lea si, smalli
+    call printSmallLetter
+    mov dx, 100bh
+    lea si, smalls
+    call printSmallLetter
+    mov dx, 110bh
+    lea si, smallc
+    call printSmallLetter
+    mov dx, 120bh
+    lea si, smallo
+    call printSmallLetter
+    mov dx, 130bh
+    lea si, smallr
+    call printSmallLetter
+    mov dx, 140bh
+    lea si, smalle
+    call printSmallLetter
+    mov dx, 150bh
+    lea si, smalls
+    call printSmallLetter
+    mov dx, 0e0dh
+    lea si, smalle
+    call printSmallLetter
+    mov dx, 0f0dh
+    lea si, smallX
+    call printSmallLetter
+    mov dx, 100dh
+    lea si, smalli
+    call printSmallLetter
+    mov dx, 110dh
+    lea si, smallt
+    call printSmallLetter
+    ret
+menu endp
