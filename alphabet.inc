@@ -88,16 +88,16 @@
 		DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h  
 		DB 00h,0bh,0bh,0bh,00h,00h,0bh,0bh,0bh,00h
 	smallI:
+		DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
+		DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
 		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
-		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
-		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
-		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
-		DB 00h,00h,00h,0bh,0bh,0bh,00h,00h,00h,00h
+		DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
+		DB 00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h
 	smallJ:
 		DB 00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,00h
 		DB 00h,00h,00h,00h,00h,00h,0bh,0bh,0bh,00h
