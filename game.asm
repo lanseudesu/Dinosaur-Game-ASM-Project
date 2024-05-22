@@ -1,7 +1,7 @@
 ; todo: shorten sprite related procs
 ; - random interval for obstacles spawning
-; - leaderboard, pause
-; - prettify main menu and gameover
+; - pause
+; - design and animation
 
 .model small
 .386
@@ -38,8 +38,21 @@
     color db 0
 
     hearts db 0
+    handle dw ?
+    filename db 'scores.txt', 0
+    nameBuffer db 5 dup(?)
+    ;scores db 05h
+            ;db 'LANS$', 000h, 010h
+            ;db 'BNOS$', 000h, 00Fh
+            ;db 'DURO$', 000h, 009h
+            ;db 'FRED$', 000h, 004h
+            ;db 'DIEL$', 000h, 001h
+    ; LANS 0016 BNOS 0315 DURO 0009 FRED 0104 DIEL 0201  
+    scores db 00h, 7*50 dup (0)
+    score dw 0
+    scorebuffer db 000h, 000h
+    username db 'ELSA$'
 .code
-
 draw macro x, y, w, h, c         
 	mov xloc, x
 	mov yloc, y
@@ -92,11 +105,16 @@ main PROC
     cmp al, 's'
     je maingame
     cmp al, 'h'
-    je promptLoop2
+    je mmhiscore
     cmp al, 'x'
     je exitgame
     jmp promptLoop2
 
+    mmhiscore:
+    call leaderboard
+    mov ah, 4ch
+    int 21h
+    
     exitgame:
     mov ah, 4CH
     int 21h
@@ -223,6 +241,81 @@ main PROC
             jmp l4 ; falling
 main ENDP
 
+leaderboard proc
+    call cls
+    ; fetch handle
+    mov ax, 3d02h
+    lea dx, filename
+    int 21h
+    mov handle, ax
+
+    ; go to start of file
+    mov ax, 4200h
+    mov bx, handle
+    mov cx, 0
+    mov dx, 0
+    int 21h
+
+    ; read from file
+    mov ah, 3fh
+    mov bx, handle
+    mov cx, 2eh           ; 7*5 + 1
+    lea dx, scores
+    int 21h
+
+    lea si, scores
+    mov ch, byte ptr [si] ; ch = number of records (05h)
+    inc si                ; inc bcuz actual data starts from si+1
+    iterScores:
+        lea di, nameBuffer
+        mov cl, 05h       ; 4 letter name + '$'
+        nameloop:
+            mov dl, byte ptr [si]
+            mov byte ptr [di], dl
+            inc di
+            inc si
+            dec cl
+            jnz nameloop
+
+        mov ah, 02h
+        mov dl, 0ah
+        int 21h  
+        lea dx, nameBuffer
+        mov ah, 09h
+        int 21h
+
+        mov ah, 02h
+        mov dl, 20h
+        int 21h
+        
+        mov ah, byte ptr [si]
+        inc si
+        mov al, byte ptr [si]
+        push cx
+        mov cx, 04h     ; 0000 format score
+        hexToDec:       ; convert to decimal
+            xor dx, dx
+            mov bx, 0ah
+            div bx
+            push dx
+        loop hexToDec
+        mov cx, 04h
+        printNum:       ; print score
+            pop dx
+            add dx, '0'
+            mov ah, 02 
+            int 21h
+        loop printNum
+        inc si
+        pop cx
+        dec ch
+        mov ah, 02h
+        mov dl, 10
+        int 21h
+    jnz iterScores
+    ret
+leaderboard endp
+
 cls proc
     mov ax, 0A000h      
     mov es, ax
@@ -281,9 +374,12 @@ deadcls proc
         cmp al, 'y'
         je restartGame
         cmp al, 'x'
-        je exit
+        je lead
         jmp promptLoop
     
+    lead:
+        call leaderboard
+
     exit:
         mov ah, 4CH
         int 21h
@@ -354,10 +450,13 @@ checkCollision PROC
         call printSmallLetter
         lea si, heart2
         call printSmallLetter
-        mov cl, 4
+        mov cx, 4
         mov dx, 0e0ah
+        lea bp, username
         readcharacter:
             call ReadChar
+            mov byte ptr ds:[bp], al
+            inc bp
             call checkInput
             push si
             lea si, blank
@@ -366,6 +465,12 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
+        mov byte ptr ds:[bp], '$'
+        mov ax, score
+        dec ax
+        lea si, scorebuffer
+        mov byte ptr [si+1], al
+        call writeToRec
         call printScore
         call deadcls
 
@@ -428,6 +533,125 @@ checkCollision PROC
             mov curDinoXY, dx
             jmp infloop
 checkCollision ENDP
+
+writeToRec proc  ; insert new score into hiscore list
+    ; fetch handle
+    mov ax, 3d02h
+    lea dx, filename
+    int 21h
+    mov handle, ax ; return ax as handle
+            
+    ; go to start of file
+    mov ax, 4200h
+    mov bx, handle
+    mov cx, 0
+    mov dx, 0
+    int 21h
+
+    ; read from file
+    mov ah, 3fh
+    mov bx, handle
+    mov cx, 2eh             ; 7*5 + 1
+    lea dx, scores
+    int 21h
+            
+    ; insert rec
+    lea di, scores
+    xor ax, ax              
+    mov al, byte ptr [di]
+    mov bl, 07h       ; go to the last score rec
+    mul bl
+    xor ah, ah
+    add di, ax        ; move di to the the last byte of the last rec
+    add di, 01h
+    insrec:
+        lea si, username
+        mov cx, 05h
+        inpname:      ; insert each letter of the username into last rec
+            mov dl, byte ptr [si]
+            mov byte ptr [di], dl
+            inc si
+            inc di
+            loop inpname
+            lea si, scorebuffer ; insert score
+            mov dh, byte ptr [si]
+            mov dl, byte ptr [si+1]
+            mov byte ptr [di], dh
+            mov byte ptr [di+1], dl
+            
+            ; increment score size 
+            lea si, scores
+            mov ch, byte ptr [si]
+            inc ch
+            mov byte ptr [si], ch
+            
+            ;sort using bubble sort
+            mov dh, ch
+            ; ch = outer loop counter
+            ; dh = inner loop counter
+            outsort:
+                lea si, scores 
+                lea di, scores
+                add si, 07h  ; 07h is the low byte of the first rec score
+                add di, 07h
+                push cx
+                mov ch, dh
+                insort:
+                    mov di, si
+                    mov ah, byte ptr [si]
+                    mov al, byte ptr [si-1]
+                    mov bh, byte ptr [si+7]
+                    mov bl, byte ptr [si+6]
+                    cmp ax, bx
+                    jge noswap
+                    add di, 01h
+                    sub si, 06h
+                    mov dl, 07h
+                    swapscore:
+                        mov bh, byte ptr [di]
+                        mov bl, byte ptr [si]
+                        mov byte ptr [di], bl
+                        mov byte ptr [si], bh
+                        inc si
+                        inc di
+                        dec dl
+                        jnz swapscore
+                    noswap:
+                    add si, 07h
+                    dec ch 
+                jnz insort
+                pop cx
+                dec dh
+                dec ch
+            jnz outsort
+
+            ; cap hiscores to 5 recs
+            lea si, scores
+            mov al, byte ptr [si]
+            cmp al, 05h
+            jle undercap
+            mov al, 05h
+            undercap:
+            mov byte ptr[si], al
+                
+            ; go to start of file
+            mov ax, 4200h
+            mov bx, handle
+            mov cx, 0
+            mov dx, 0
+            int 21h
+            ; write to file
+            mov ah, 40h
+            mov bx, handle
+            lea dx, scores
+            mov cx, 2eh;
+            int 21h
+            ; close file
+            mov ah, 3eh
+            mov bx, handle
+            int 21h
+            ret
+writeToRec endp
 
 printScore proc
     dec ones
