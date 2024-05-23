@@ -33,6 +33,7 @@ drawOnes proc
     mov ones, 1
     inc tens
     call drawTens
+    inc score
     ret
     print0:
     lea si, blank2

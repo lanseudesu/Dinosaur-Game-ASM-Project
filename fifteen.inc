@@ -339,4 +339,251 @@ bigu:
     DB 00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h    
     DB 00h,00h,00h,00h,0bh,0bh,0bh,0bh,0bh,0bh,0bh,00h,00h,00h,00h
 
+bigassg:
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+    DB 00h, 00h, 0bh, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 27h, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h, 00h
+    DB 0bh, 0bh, 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 00h, 00h, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 00h, 00h 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+
+bigassa:
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h, 00h 
+    DB 00h, 00h, 0bh, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 27h, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h 
+    DB 0bh, 0bh, 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h 
+    DB 0bh, 04h, 04h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 04h, 04h, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+bigassm:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 04h, 27h, 0bh, 0bh, 00h, 00h, 00h, 0bh, 04h, 04h, 04h, 27h, 27h, 0bh, 0bh, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 04h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 04h, 04h, 0bh, 0bh, 04h, 04h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+bigasse:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 04h, 04h, 04h, 04h, 27h, 04h, 04h, 04h, 04h, 27h, 27h, 27h, 0bh, 0bh, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 00h, 00h 
+    DB 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 00h 
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+bigasso:
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h
+    DB 00h, 00h, 0bh, 04h, 04h, 04h, 04h, 04h, 27h, 27h, 04h, 04h, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 0bh, 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 04h, 04h, 0bh, 0bh, 00h, 00h
+    DB 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+
+bigassv:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 04h, 04h, 0bh, 0bh, 00h, 0bh, 0bh, 04h, 04h, 04h, 04h, 0bh, 0bh, 00h, 00h 
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h 
+    DB 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 00h, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 00h, 00h, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh  
+    DB 00h, 00h, 00h, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh  
+    DB 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h  
+    DB 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h
+    DB 00h, 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h 
+    DB 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+
+bigassr:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 00h
+    DB 0bh, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 27h, 04h, 04h, 04h, 0bh, 0bh, 00h, 00h, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 04h, 04h, 0bh, 0bh, 00h, 00h
+    DB 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 0bh, 0bh, 0bh, 00h
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+smallasse:
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 0bh
+    DB 0bh, 0bh, 0bh, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh
+    DB 0bh, 04h, 04h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 21h, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh
+    DB 0bh, 0bh, 0bh, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 21h, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+smallassn:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 04h, 04h, 04h, 27h, 0bh, 0bh, 04h, 04h, 0bh
+    DB 0bh, 04h, 27h, 27h, 27h, 0bh, 0bh, 04h, 27h, 0bh
+    DB 0bh, 27h, 27h, 27h, 27h, 27h, 0bh, 27h, 27h, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 21h, 21h, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 21h, 21h, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 21h, 21h, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+
+smallasst:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 04h, 04h, 04h, 04h, 27h, 04h, 04h, 27h, 27h, 0bh
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 27h, 27h, 27h, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 20h, 20h, 20h, 0bh, 0bh, 0bh, 0bh
+    DB 00h, 00h, 00h, 0bh, 20h, 20h, 20h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 20h, 20h, 20h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 20h, 20h, 20h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 21h, 21h, 21h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 21h, 21h, 21h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 21h, 21h, 21h, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+    DB 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h
+
+smallassr:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 04h, 04h, 04h, 04h, 27h, 04h, 04h, 27h, 27h, 0bh
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh
+    DB 0bh, 27h, 27h, 27h, 0bh, 0bh, 0bh, 27h, 27h, 27h, 0bh
+    DB 0bh, 20h, 20h, 20h, 0bh, 0bh, 0bh, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 0bh
+    DB 0bh, 20h, 20h, 20h, 0bh, 0bh, 0bh, 20h, 20h, 20h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 00h, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 00h, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 0bh, 0bh, 0bh, 0bh, 0bh
+
+smallassa:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 04h, 04h, 04h, 04h, 04h, 27h, 04h, 04h, 0bh  
+    DB 0bh, 04h, 27h, 27h, 27h, 27h, 27h, 27h, 27h, 0bh 
+    DB 0bh, 27h, 27h, 27h, 0bh, 0bh, 27h, 27h, 27h, 0bh 
+    DB 0bh, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 0bh 
+    DB 0bh, 20h, 20h, 20h, 04h, 04h, 20h, 20h, 20h, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh 
+    DB 0bh, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 0bh 
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 21h, 21h, 21h, 0bh 
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh 
+
+smallassm:
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 04h, 04h, 04h, 0bh, 00h, 00h, 00h, 00h, 0bh, 04h, 04h, 27h, 0bh
+    DB 0bh, 04h, 27h, 27h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 04h, 27h, 27h, 0bh
+    DB 0bh, 27h, 27h, 27h, 04h, 04h, 0bh, 0bh, 04h, 04h, 27h, 27h, 27h, 0bh 
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 0bh
+    DB 0bh, 20h, 20h, 20h, 0bh, 0bh, 20h, 20h, 0bh, 0bh, 20h, 20h, 20h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 20h, 20h, 0bh, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 21h, 21h, 21h, 0bh, 0bh, 0bh, 0bh, 0bh, 0bh, 21h, 21h, 21h, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh
+    DB 0bh, 0bh, 0bh, 0bh, 0bh, 00h, 00h, 00h, 00h, 0bh, 0bh, 0bh, 0bh, 0bh
+
 
