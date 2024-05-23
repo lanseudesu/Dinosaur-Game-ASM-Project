@@ -285,6 +285,10 @@ gameOverScreen PROC ; prints game over screen
     call calcXYbuffer
     mov bx, 1214h
     call drawImg
+    ret
+gameOverScreen ENDP
+
+enterName proc
     mov dx, 6b53h
     lea si, smallasse
     call calcXYbuffer
@@ -340,7 +344,7 @@ gameOverScreen PROC ; prints game over screen
     cmp bp, 4
     jne blankLoop
     ret
-gameOverScreen ENDP
+enterName endp
 
 calcXYbuffer proc
     mov al, 3
@@ -349,54 +353,76 @@ calcXYbuffer proc
 calcXYbuffer endp
 
 tryAgainScreen proc ; prints try again screen
-    mov dx, 0604h
-    lea si, bigt
-    call printLetter
-    mov dx, 0704h
-    lea si, bigr
-    call printLetter
-    mov dx, 0804h
-    lea si, bigy
-    call printLetter
-    mov dx, 0a04h
-    lea si, biga
-    call printLetter
-    mov dx, 0b04h
-    lea si, bigg
-    call printLetter
-    mov dx, 0c04h
-    lea si, biga
-    call printLetter
-    mov dx, 0d04h
-    lea si, bigi
-    call printLetter
-    mov dx, 0e04h
-    lea si, bign
-    call printLetter
-    mov dx, 0f04h
-    lea si, question
-    call printLetter
-    mov dx, 0f0ah
-    lea si, smally
-    call printSmallLetter
-    mov dx, 100ah
-    lea si, smalle
-    call printSmallLetter
-    mov dx, 110ah
-    lea si, smalls
-    call printSmallLetter
-    mov dx, 0f0ch
-    lea si, smalle
-    call printSmallLetter
-    mov dx, 100ch
-    lea si, smallx
-    call printSmallLetter
-    mov dx, 110ch
-    lea si, smalli
-    call printSmallLetter
-    mov dx, 120ch
-    lea si, smallt
-    call printSmallLetter
+    mov dx, 7154h
+    lea si, smallasst
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassr
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassy
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 15
+    lea si, smallassa
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassg
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassa
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassi
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassn
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, questionmark
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    mov dx, 796dh
+    lea si, smallassy
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallasse
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallasss
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 32
+    lea si, smallassn
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallasso
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
     ret
 tryAgainScreen endp
 

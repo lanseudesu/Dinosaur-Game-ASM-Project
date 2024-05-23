@@ -1,4 +1,4 @@
-; todo: shorten sprite related procs
+; todo: shorten/simplify code
 ; - random interval for obstacles spawning
 ; - pause
 ; - design and animation
@@ -31,6 +31,8 @@
     thousands db 0
     newThousands db 0
 
+    ans db 0
+
     xloc dw 0
     yloc dw 0
     wid dw 0
@@ -41,13 +43,6 @@
     handle dw ?
     filename db 'scores.txt', 0
     nameBuffer db 5 dup(?)
-    ;scores db 05h
-            ;db 'LANS$', 000h, 010h
-            ;db 'BNOS$', 000h, 00Fh
-            ;db 'DURO$', 000h, 009h
-            ;db 'FRED$', 000h, 004h
-            ;db 'DIEL$', 000h, 001h
-    ; LANS 0016 BNOS 0315 DURO 0009 FRED 0104 DIEL 0201  
     scores db 00h, 7*50 dup (0)
     score dw 0
     scorebuffer db 000h, 000h
@@ -334,56 +329,61 @@ cls endp
 
 deadcls proc
     call cls
-    ;draw bracket y
-    draw 128, 98, 2, 1, 2ah
-    draw 128, 99, 1, 10, 2ah
-    draw 128, 110, 2, 1, 2ah
-    draw 133, 99, 2, 4, 2ah
-    draw 139, 99, 2, 4, 2ah
-    draw 134, 103, 2, 1, 2ah
-    draw 138, 103, 2, 1, 2ah
-    draw 135, 104, 4, 1, 2ah
-    draw 136, 105, 2, 4, 2ah
-    draw 144, 98, 2, 1, 2ah
-    draw 145, 99, 1, 10, 2ah
-    draw 144, 110, 2, 1, 2ah
-    ;draw bracket x
-    draw 128, 118, 2, 1, 04h
-    draw 128, 119, 1, 10, 04h
-    draw 128, 130, 2, 1, 04h
-    draw 133, 119, 2, 3, 04h
-    draw 139, 119, 2, 3, 04h
-    draw 134, 122, 2, 1, 04h
-    draw 138, 122, 2, 1, 04h
-    draw 136, 123, 2, 1, 04h
-    draw 134, 125, 2, 1, 04h
-    draw 138, 125, 2, 1, 04h
-    draw 133, 126, 2, 4, 04h
-    draw 139, 126, 2, 4, 04h
-    draw 144, 118, 2, 1, 04h
-    draw 145, 119, 1, 10, 04h
-    draw 144, 130, 2, 1, 04h
-
     mov dx, 010bh  
     mov al, 1       ; flag for dead dino sprite
     call drawDino   ; draw dead dino sprite
+    call gameOverScreen
     call tryAgainScreen
-    call ReadChar
-
+    lea si, arrow
+    mov dx, 706dh
+    call arrowMove
+    mov ans, 0
     promptLoop:
-        cmp al, 'y'
-        je restartGame
-        cmp al, 'x'
-        je lead
+        call ReadChar
+        cmp al, 4bh
+        je goLeft
+        cmp al, 4dh
+        je goRight
+        cmp al, 0dh
+        je confirm
         jmp promptLoop
     
-    lead:
-        call leaderboard
+    goLeft:
+        lea si, arrow
+        sub dh, 56
+        call arrowMove
+        lea si, arrow
+        add dh, 56
+        call arrowMove
+        mov ans, 0
+        jmp promptLoop
 
-    exit:
-        mov ah, 4CH
-        int 21h
+    goRight:
+        lea si, arrow
+        mov dx, 706dh
+        call arrowMove
+        lea si, arrow
+        add dh, 56
+        call arrowMove
+        mov ans, 1
+        jmp promptLoop
+
+    confirm:
+        mov al, ans
+        cmp al, 0
+        je yesAns
+        call main
+        yesAns:
+        call restartGame
+
 deadcls endp
+
+arrowMove proc
+    call calcXYbuffer
+    mov bx, 070ch
+    call drawImg
+    ret
+arrowMove endp
 
 restartGame proc                
     mov ones, 0
@@ -445,13 +445,14 @@ checkCollision PROC
         jne reset
 
         call gameOverScreen
+        call enterName
         mov dx, 1600h
         lea si, heart
         call printSmallLetter
         lea si, heart2
         call printSmallLetter
         mov cx, 4
-        mov dx, 0e0ah
+        mov dx, 0e0bh
         lea bp, username
         readcharacter:
             call ReadChar
@@ -465,6 +466,7 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
+
         mov byte ptr ds:[bp], '$'
         mov ax, score
         dec ax
