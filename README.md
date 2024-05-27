@@ -11,8 +11,8 @@
 - Tarino, Janna Lyka
 - Sanchez, Venus Aira
 
-# **Prehistoric Runner**
-Play as a dinosaur and navigate through the lands while avoiding any obstacles by jumping and ducking. Good luck!
+# **T-Rex**
+Play as Rex the T-Rex and navigate through the lands while avoiding any obstacles by jumping above them. Good luck!
 
 # Infos:
 - All made in 8086 assembly
