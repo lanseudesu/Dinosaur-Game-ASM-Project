@@ -67,6 +67,7 @@ main PROC
     mov ax, @data
     mov ds, ax 
 
+    ;call leaderboard
     call menu
     lea si, arrow
     mov dx, 6464h
@@ -264,6 +265,7 @@ main ENDP
 
 leaderboard proc
     call cls
+    call leaderboardScreen
     ; fetch handle
     mov ax, 3d02h
     lea dx, filename
@@ -287,6 +289,8 @@ leaderboard proc
     lea si, scores
     mov ch, byte ptr [si] ; ch = number of records (05h)
     inc si                ; inc bcuz actual data starts from si+1
+    mov dx, 0710h
+    push dx
     iterScores:
         lea di, nameBuffer
         mov cl, 05h       ; 4 letter name + '$'
@@ -300,7 +304,15 @@ leaderboard proc
 
         mov ah, 02h
         mov dl, 0ah
-        int 21h  
+        int 21h 
+
+        mov ah, 02h           ; BIOS set cursor position function
+        mov bh, 00h           ; Page number (usually 0)
+        pop dx
+        int 10h               ; Call BIOS interrupt 10h to set cursor position
+        add dh, 2
+        push dx
+
         lea dx, nameBuffer
         mov ah, 09h
         int 21h
@@ -334,9 +346,8 @@ leaderboard proc
         mov dl, 10
         int 21h
     jnz iterScores
-
-    call readchar
     promptLoop3:
+        call readchar
         cmp al, 'b'
         je goBackMain
         jmp promptLoop3

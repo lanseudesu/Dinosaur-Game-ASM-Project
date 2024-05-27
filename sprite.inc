@@ -592,6 +592,49 @@ menu proc
 menu endp
 
 leaderboardScreen proc
-    
+    mov dx, 7008h
+    lea si, leaderboard1
+    call calcXYbuffer
+    mov bx, 2184h
+    call drawImg
+    add dh, 33
+    add dl, 2
+    lea si, leaderboard2
+    call calcXYbuffer
+    mov bx, 3008h
+    call drawImg
+    add dl, 26
+    lea si, leaderboard3
+    call calcXYbuffer
+    mov bx, 3068h
+    call drawImg
+    add dh, 48
+    mov dl, 08h
+    lea si, leaderboard4
+    call calcXYbuffer
+    mov bx, 1984h
+    call drawImg
+    mov dx, 8092h
+    lea si, bracketb
+    call calcXYbuffer
+    mov bx, 270fh
+    call drawImg
+    add dh, 40
+    inc dl
+    lea si, smallassa
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassc
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 12
+    lea si, smallassk
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    ret
 leaderboardScreen endp
 
