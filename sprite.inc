@@ -246,42 +246,42 @@ checkInput endp
 
 gameOverScreen PROC ; prints game over screen
     mov dx, 4e3ah
-    lea si, bigassg
+    lea si, bigg
     call calcXYbuffer
     mov bx, 1315h
     call drawImg
     add dh, 21
-    lea si, bigassa
+    lea si, biga
     call calcXYbuffer
     mov bx, 1215h
     call drawImg
     add dh, 20
-    lea si, bigassm
+    lea si, bigm
     call calcXYbuffer
     mov bx, 1415h
     call drawImg
     add dh, 22
-    lea si, bigasse
+    lea si, bige
     call calcXYbuffer
     mov bx, 1314h
     call drawImg
     add dh, 25
-    lea si, bigasso
+    lea si, bigo
     call calcXYbuffer
     mov bx, 1214h
     call drawImg
     add dh, 20
-    lea si, bigassv
+    lea si, bigv
     call calcXYbuffer
     mov bx, 1214h
     call drawImg
     add dh, 20
-    lea si, bigasse
+    lea si, bige
     call calcXYbuffer
     mov bx, 1314h
     call drawImg
     add dh, 21
-    lea si, bigassr
+    lea si, bigr
     call calcXYbuffer
     mov bx, 1214h
     call drawImg
@@ -440,107 +440,158 @@ drawhearts proc
 drawhearts endp
 
 menu proc
-    mov dx, 0503h
-    lea si, bigp
-    call printLetter
-    mov dx, 0603h
-    lea si, bigr
-    call printLetter
-    mov dx, 0703h
-    lea si, bige
-    call printLetter
-    mov dx, 0803h
-    lea si, bigh
-    call printLetter
-    mov dx, 0903h
-    lea si, bigi
-    call printLetter
-    mov dx, 0a03h
-    lea si, bigs
-    call printLetter
-    mov dx, 0b03h
-    lea si, bigt
-    call printLetter
-    mov dx, 0c03h
-    lea si, bigo
-    call printLetter
-    mov dx, 0d03h
-    lea si, bigr
-    call printLetter
-    mov dx, 0e03h
-    lea si, bigi
-    call printLetter
-    mov dx, 0f03h
-    lea si, bigc
-    call printLetter
-    mov dx, 0d07h
-    lea si, smallr
-    call printSmallLetter
-    mov dx, 0e07h
-    lea si, smallu
-    call printSmallLetter
-    mov dx, 0f07h
-    lea si, smallN
-    call printSmallLetter
-    mov dx, 1007h
-    lea si, smalln
-    call printSmallLetter
-    mov dx, 1107h
-    lea si, smallE
-    call printSmallLetter
-    mov dx, 1207h
-    lea si, smallr
-    call printSmallLetter
-    mov dx, 0e09h
-    lea si, smalls
-    call printSmallLetter
-    mov dx, 0f09h
-    lea si, smallt
-    call printSmallLetter
-    mov dx, 1009h
-    lea si, smalla
-    call printSmallLetter
-    mov dx, 1109h
-    lea si, smallr
-    call printSmallLetter
-    mov dx, 1209h
-    lea si, smallt
-    call printSmallLetter
-    mov dx, 0e0bh
-    lea si, smallh
-    call printSmallLetter
-    mov dx, 0f0bh
-    lea si, smalli
-    call printSmallLetter
-    mov dx, 100bh
-    lea si, smalls
-    call printSmallLetter
-    mov dx, 110bh
-    lea si, smallc
-    call printSmallLetter
-    mov dx, 120bh
-    lea si, smallo
-    call printSmallLetter
-    mov dx, 130bh
-    lea si, smallr
-    call printSmallLetter
-    mov dx, 140bh
-    lea si, smalle
-    call printSmallLetter
-    mov dx, 150bh
-    lea si, smalls
-    call printSmallLetter
-    mov dx, 0e0dh
-    lea si, smalle
-    call printSmallLetter
-    mov dx, 0f0dh
-    lea si, smallX
-    call printSmallLetter
-    mov dx, 100dh
-    lea si, smalli
-    call printSmallLetter
-    mov dx, 110dh
-    lea si, smallt
-    call printSmallLetter
+    mov dx, 4818h
+    lea si, trex1
+    call calcXYbuffer
+    mov bx, 2112h
+    call drawImg
+    add dh, 33
+    lea si, trex2
+    call calcXYbuffer
+    mov bx, 2112h
+    call drawImg
+    mov dx, 5d2ah
+    lea si, trex3
+    call calcXYbuffer
+    mov bx, 3130h
+    call drawImg
+    add dh, 31h
+    lea si, trex4
+    call calcXYbuffer
+    mov bx, 3030h
+    call drawImg
+    add dh, 30h
+    lea si, trex5
+    call calcXYbuffer
+    mov bx, 3030h
+    call drawImg
+    add dh, 30h
+    inc dl
+    lea si, trex6
+    call calcXYbuffer
+    mov bx, 092eh
+    call drawImg
+    mov dx, 4d2ah
+    lea si, trex7
+    call calcXYbuffer
+    mov bx, 1001h
+    call drawImg
+    mov dx, 6e64h
+    lea si, smallasss
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallasst
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassa
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassr
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallasst
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 14
+    lea si, smallassg
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassa
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassm
+    call calcXYbuffer
+    mov bx, 0e0dh
+    call drawImg
+    add dh, 14
+    lea si, smallasse
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    mov dx, 7375h
+    lea si, smallassh
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallassi
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    add dl, 4
+    lea si, dash
+    call calcXYbuffer
+    mov bx, 0605h
+    call drawImg
+    add dh, 6
+    sub dl, 4
+    lea si, smallasss
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallassc
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallasso
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallassr
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
+    add dh, 11
+    lea si, smallasse
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallasss
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    mov dx, 8b84h
+    lea si, smallasse
+    call calcXYbuffer
+    mov bx, 0c0dh
+    call drawImg
+    add dh, 12
+    lea si, smallassx
+    call calcXYbuffer
+    mov bx, 0d0dh
+    call drawImg
+    add dh, 13
+    lea si, smallassi
+    call calcXYbuffer
+    mov bx, 0a0dh
+    call drawImg
+    add dh, 10
+    lea si, smallasst
+    call calcXYbuffer
+    mov bx, 0b0dh
+    call drawImg
     ret
 menu endp
+
+leaderboardScreen proc
+    
+leaderboardScreen endp
+

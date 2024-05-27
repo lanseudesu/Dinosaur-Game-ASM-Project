@@ -48,41 +48,14 @@
     scorebuffer db 000h, 000h
     username db 'ELSA$'
 .code
-draw macro x, y, w, h, c         
-	mov xloc, x
-	mov yloc, y
-	mov wid, w
-	mov height, h
-    mov color, c
-	call addRec
-endm
-
-addRec proc
-	mov cx, xloc              
-	mov dx, yloc
-	drawLoop:
-		mov ah, 0Ch           ;draw pixel
-		mov al, color         ;color
-		mov bh, 00h           ;page number, always 0
-		int 10h
-
-		inc cx
-		mov ax, cx
-		sub ax, xloc
-		cmp ax, wid
-		jng drawLoop
-		
-		mov cx, xloc
-		inc dx
-		
-		mov ax, dx
-		sub ax, yloc
-		cmp ax, height
-		jng drawLoop
-	ret
-addRec endp
 
 main PROC
+    mov ones, 0
+    mov tens, 0
+    mov hundreds, 0
+    mov thousands, 0
+    mov hearts, 3
+    
     mov ax, @code       
     mov ds, ax
     ; screen initialization
@@ -95,20 +68,74 @@ main PROC
     mov ds, ax 
 
     call menu
+    lea si, arrow
+    mov dx, 6464h
+    call arrowMove
+    mov ans, 0
     promptLoop2:
-    call readchar
-    cmp al, 's'
-    je maingame
-    cmp al, 'h'
-    je mmhiscore
-    cmp al, 'x'
-    je exitgame
-    jmp promptLoop2
+        call ReadChar
+        cmp al, 48h
+        je goUp
+        cmp al, 50h
+        je goDown
+        cmp al, 0dh
+        je confirm2
+        jmp promptLoop2
+    
+    goUp:
+        cmp dx, 6975h
+        je startchoice
+        cmp dx, 7f85h
+        je hiscorechoice
+        jmp returnPrompt
 
-    mmhiscore:
+        startchoice:
+            lea si, arrow
+            call arrowMove
+            lea si, arrow
+            mov dx, 6464h
+            call arrowMove
+            mov ans, 0
+            jmp promptLoop2
+
+    goDown:
+        cmp dx, 6464h
+        je hiscoreChoice
+        cmp dx, 6975h
+        je exitchoice
+        jmp returnPrompt
+
+        hiscoreChoice:
+            lea si, arrow
+            call arrowMove
+            lea si, arrow
+            mov dx, 6975h
+            call arrowMove
+            mov ans, 1
+            jmp promptLoop2
+        
+        exitChoice:
+            lea si, arrow
+            call arrowMove
+            lea si, arrow
+            mov dx, 7f85h
+            call arrowMove
+            mov ans, 2
+            jmp promptLoop2
+
+        returnPrompt:
+        jmp promptLoop2
+
+    confirm2:
+        mov al, ans
+        cmp al, 1
+        je gotohiscore
+        cmp al, 2
+        je exitgame
+        jmp maingame
+
+    gotohiscore:
     call leaderboard
-    mov ah, 4ch
-    int 21h
     
     exitgame:
     mov ah, 4CH
@@ -116,7 +143,6 @@ main PROC
 
     maingame:
     call cls
-    mov hearts, 3
     call drawhearts
 
     ; draw default dino pos
@@ -308,7 +334,14 @@ leaderboard proc
         mov dl, 10
         int 21h
     jnz iterScores
-    ret
+
+    call readchar
+    promptLoop3:
+        cmp al, 'b'
+        je goBackMain
+        jmp promptLoop3
+    goBackMain:
+        call main
 leaderboard endp
 
 cls proc
