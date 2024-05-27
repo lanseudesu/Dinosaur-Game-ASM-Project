@@ -1,15 +1,13 @@
 ; todo: shorten/simplify code
 ; - random interval for obstacles spawning
-; - pause
-; - design and animation
 
 .model small
 .386
 .stack 1024
 .data
     include sprite.inc       ; sprite related procs
-    include fifteen.inc      ; 15x15 sprites
-    include alphabet.inc     ; 10x10 letters
+    include fifteen.inc      ; include all sprites except alphabet
+    include alphabet.inc     ; alphabet and numbers for score and name input
     include score.inc        ; score printing
 
     DinoXY dw 960 dup (?)    ; dh = x, dl = y
@@ -32,6 +30,10 @@
     newThousands db 0
 
     ans db 0
+    dinoCycle db 2
+    curArrowPos dw 0
+    counter db 0
+    firstjump db 0
 
     xloc dw 0
     yloc dw 0
@@ -69,18 +71,25 @@ main PROC
 
     ;call leaderboard
     call menu
+    call drawclouds
+    mov al, 2
+    mov dx, 010bh
+    call drawDino
     lea si, arrow
     mov dx, 6464h
     call arrowMove
     mov ans, 0
     promptLoop2:
-        call ReadChar
-        cmp al, 48h
+        call ReadCharWithTimeout
+        cmp ah, 48h
         je goUp
-        cmp al, 50h
+        cmp ah, 50h
         je goDown
         cmp al, 0dh
         je confirm2
+        mov curArrowPos, dx
+        call walkCycle
+        mov dx, curArrowPos
         jmp promptLoop2
     
     goUp:
@@ -145,9 +154,20 @@ main PROC
     maingame:
     call cls
     call drawhearts
+    call drawclouds
+    call drawclouds2
+    cmp firstjump, 2
+    jne gotutorial
+    jmp m1
 
+    gotutorial:
+        call tutorial
+
+    m1:
     ; draw default dino pos
     mov dx, 010bh
+    mov dinoCycle, 2
+    mov al, 2
     call drawDino 
     mov curDinoXY, dx
     call drawOnes
@@ -161,12 +181,10 @@ main PROC
     lea si, num0
     call printSmallLetter
     infloop:
-        mov dx, 160bh
+        mov counter, 0
+        mov dx, 150bh
         call drawBoulder
         l1:
-            ;mov curBoulderXY, dx
-            ;call drawOnes
-            ;mov dx, curBoulderXY
             cmp dh, 00h
             jle slideStop
             cmp dh, 0Bh
@@ -181,7 +199,10 @@ main PROC
             call drawBoulder
             call Delay
             call checkCollision
-            jmp l1
+            inc counter
+            cmp counter, 3
+            jne l1
+            jmp animate
 
         incOnes:
             mov curBoulderXY, dx
@@ -189,21 +210,66 @@ main PROC
             mov dx, curBoulderXY
             jmp l2
 
+        animate:
+            mov curBoulderXY, dx
+            mov counter, 0
+            mov dx, 010bh
+            mov al, dinoCycle
+            cmp al, 2
+            je leftfoot2
+            cmp al, 3
+            je rightfoot2
+            mov al, 0
+            call drawDino
+            mov al, 2
+            call drawDino
+            mov dinoCycle, 2
+            mov dx, curBoulderXY
+            jmp l1
+            
+            leftfoot2:
+                mov al, 2
+                call drawDino
+                mov al, 3
+                call drawDino
+                mov dinoCycle, 3
+                mov dx, curBoulderXY
+                jmp l1
+
+            rightfoot2:
+                mov al, 3
+                call drawDino
+                mov al, 2
+                call drawDino
+                mov dinoCycle, 2
+                mov dx, curBoulderXY
+                jmp l1
+
         slideStop:
             call drawBoulder
             call drawOnes
             jmp infloop
 
+    gotutorial2:
+        call tutorial
+        jmp m2
+
     ; dino jump while still continuing obstacle slide
     moveUp: 
         mov curBoulderXY, dx ; preserve current boulder pos
+        cmp firstjump, 2
+        jne gotutorial2
+        m2:
         mov dx, 010bh
         mov ecx, 4        ; height of jump
         mov isJumpFall, 1 ; set flag to 1 (jumping)
         jumpLoop:
+            mov al, dinoCycle
             call drawDino
             dec dl
+            mov al, 0
             call drawDino
+            mov dinoCycle, 0
             call delayy           ; faster delay to reduce lag
             mov curDinoXY, dx     ; preserve current dino pos
             mov dx, curBoulderXY 
@@ -223,8 +289,10 @@ main PROC
         mov ecx, 4
         mov isJumpFall, 0  ; set flag to 0 (falling)
         fallLoop:
+            mov al, 0
             call drawDino
             inc dl
+            mov al, 0
             call drawDino
             call Delayy
             mov curDinoXY, dx
@@ -240,6 +308,7 @@ main PROC
             mov curBoulderXY, dx
             mov dx, curDinoXY
         loop fallLoop
+        mov dinoCycle, 4
         mov dx, curBoulderXY
         jmp l1
 
@@ -263,6 +332,53 @@ main PROC
             jmp l4 ; falling
 main ENDP
 
+tutorial proc
+    mov dx, 8761h
+    lea si, wtojump
+    call calcXYbuffer
+    mov bx, 1907h
+    call drawImg
+    add dh, 19h
+    lea si, wtojump2
+    call calcXYbuffer
+    mov bx, 1e07h
+    call drawImg
+    inc firstjump
+    ret
+tutorial endp
+
+walkCycle proc
+    push ax
+    mov dx, 010bh
+    mov al, dinoCycle
+    cmp al, 2
+    je rightfoot
+    cmp al, 3
+    je leftfoot
+
+    rightfoot:
+    mov al, 2
+    call drawDino
+    mov al, 3
+    call drawDino
+    call longDelay
+    call longDelay
+    mov dinoCycle, 3
+    pop ax
+    ret
+
+    leftfoot:
+    mov al, 3
+    call drawDino
+    mov al, 2
+    call drawDino
+    call longDelay
+    call longDelay
+    mov dinoCycle, 2
+    pop ax
+    ret
+walkCycle endp
+
 leaderboard proc
     call cls
     call leaderboardScreen
@@ -270,8 +386,22 @@ leaderboard proc
     mov ax, 3d02h
     lea dx, filename
     int 21h
-    mov handle, ax
+    jnc continueReading
+    
+    mov ax, 3c00h
+    mov cx, 0
+    lea dx, filename
+    int 21h
 
+    mov bx, handle
+    lea dx, scores
+    mov ax, 4000h
+    mov cx, 1
+    int 21h
+    jmp promptLoop3
+
+    continueReading:
+    mov handle, ax
     ; go to start of file
     mov ax, 4200h
     mov bx, handle
@@ -288,6 +418,8 @@ leaderboard proc
 
     lea si, scores
     mov ch, byte ptr [si] ; ch = number of records (05h)
+    cmp ch, 0
+    je promptLoop3
     inc si                ; inc bcuz actual data starts from si+1
     mov dx, 0710h
     push dx
@@ -377,6 +509,8 @@ deadcls proc
     mov al, 1       ; flag for dead dino sprite
     call drawDino   ; draw dead dino sprite
     call gameOverScreen
+    call drawclouds
+    call drawclouds2
     call tryAgainScreen
     lea si, arrow
     mov dx, 706dh
@@ -435,6 +569,7 @@ restartGame proc
     mov hundreds, 0
     mov thousands, 0
     mov hearts, 3
+    mov dinoCycle, 2
 
     mov ax, @code       
     mov ds, ax
@@ -445,6 +580,7 @@ restartGame proc
     mov ds, ax 
 
     mov dx, 010bh
+    mov al, 2
     call drawDino 
     mov curDinoXY, dx
     call drawOnes
@@ -510,7 +646,6 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
-
         mov byte ptr ds:[bp], '$'
         mov ax, score
         dec ax
@@ -585,8 +720,15 @@ writeToRec proc  ; insert new score into hiscore list
     mov ax, 3d02h
     lea dx, filename
     int 21h
-    mov handle, ax ; return ax as handle
-            
+    jnc continueReading2
+
+    mov ax, 3c00h
+    mov cx, 0
+    lea dx, filename
+    int 21h
+    
+    continueReading2:
+    mov handle, ax ; return ax as handle        
     ; go to start of file
     mov ax, 4200h
     mov bx, handle

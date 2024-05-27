@@ -2,16 +2,34 @@
 drawDino PROC 
     cmp al, 1       ;check whether dino is dead or not
     je deadDino
+    cmp al, 2
+    je rightDino
+    cmp al, 3
+    je leftDino
     mov al, 0
     call calcXY
     lea si, dino    ; load sprite to SI
-    mov bx, 0f0fh
-    call drawImg
-    ret
+    jmp returnSeq1
+    
     deadDino:
     mov al, 0
     call calcXY
     lea si, dead
+    jmp returnSeq1
+
+    rightDino:
+    mov al, 0
+    call calcXY
+    lea si, dino2
+    jmp returnSeq1
+
+    leftDino:
+    mov al, 0
+    call calcXY
+    lea si, dino3
+    jmp returnSeq1
+
+    returnSeq1:
     mov bx, 0f0fh
     call drawImg
     ret
@@ -48,8 +66,8 @@ calcXY PROC   ; calculate x and y pos of image
     mov ds, ax
     pop ax      
     push dx
-    cmp al, 1
-    jle fifbyfif
+    cmp al, 0
+    je fifbyfif
     cmp al, 2
     je twobytwo
     cmp al, 3
@@ -568,7 +586,7 @@ menu proc
     call calcXYbuffer
     mov bx, 0c0dh
     call drawImg
-    mov dx, 8b84h
+    mov dx, 8b85h
     lea si, smallasse
     call calcXYbuffer
     mov bx, 0c0dh
@@ -590,6 +608,63 @@ menu proc
     call drawImg
     ret
 menu endp
+
+drawclouds2 proc
+    mov dx, 1c0bh
+    lea si, cloud1
+    call calcXYbuffer
+    mov bx, 1e0fh
+    call drawImg
+    add dh, 75
+    add dl, 5
+    lea si, cloud1
+    call calcXYbuffer
+    mov bx, 1e0fh
+    call drawImg
+    ret
+drawclouds2 endp
+
+drawclouds proc
+    mov dx, 3a02h
+    lea si, cloud3
+    call calcXYbuffer
+    mov bx, 2d11h
+    call drawImg
+    mov dx, 1c0bh
+    lea si, cloud1
+    call calcXYbuffer
+    mov bx, 1e0fh
+    call drawImg
+    mov dx, 0c510h
+    lea si, cloud2
+    call calcXYbuffer
+    mov bx, 1e0ch
+    call drawImg
+    add dh, 1eh
+    add dl, 2
+    lea si, cloud3
+    call calcXYbuffer
+    mov bx, 2d11h
+    call drawImg
+    mov dx, 0235h
+    lea si, cloud3
+    call calcXYbuffer
+    mov bx, 2d11h
+    call drawImg
+    add dh, 2eh
+    add dl, 0ch
+    lea si, cloud2
+    call calcXYbuffer
+    mov bx, 1e0ch
+    call drawImg
+    mov dx, 1b05h
+    lea si, cloud3
+    mov al, 2
+    call calcXY
+    mov bx, 2d11h
+    call drawImg
+    ret
+drawclouds endp
 
 leaderboardScreen proc
     mov dx, 7008h
