@@ -35,7 +35,7 @@ drawDino PROC
     ret
 drawDino ENDP
 
-drawBoulder PROC 
+drawBoulder PROC
     mov al, 0
     call calcXY
     lea si, boulder ; load sprite to SI
