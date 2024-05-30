@@ -11,7 +11,8 @@
     include score.inc        ; score printing
     ;include anim.inc        ; walk cycle
     
-
+    randSprite dw 0
+    random_seed dw 0
     DinoXY dw 960 dup (?)    ; dh = x, dl = y
     curDinoXY dw 0           ; cur = current
     curBoulderXY dw 0
@@ -50,6 +51,8 @@
     score dw 0
     scorebuffer db 000h, 000h       
     username db 'ELSA$'
+
+    sprites dw OFFSET boulder, OFFSET boulder2, OFFSET boulder3, OFFSET cacti, OFFSET cacti2
 .code
 
 main PROC
@@ -76,6 +79,8 @@ main PROC
     ;call leaderboard
     call menu
     call drawclouds
+    ;mov dx, 150bh
+    ;call drawBoulder
     mov al, 2           ; to know what dino sprite to print
     mov dx, 010bh       ; cursor pos of dino
     call drawDino
@@ -186,7 +191,6 @@ main PROC
     call printSmallLetter
     infloop:
         mov counter, 0
-        mov dx, 150bh
         call drawBoulder
         l1:
             cmp dh, 00h
@@ -202,9 +206,9 @@ main PROC
             je moveUp
 
             ;jmp smth
-            call drawBoulder
+            call drawBoulder2
             dec dh
-            call drawBoulder
+            call drawBoulder2
 
         skipUpdate:
             call checkCollision
@@ -257,7 +261,7 @@ main PROC
                 jmp l1
 
         slideStop:
-            call drawBoulder
+            call drawBoulder2
             call drawOnes
 
             call decDelay
@@ -291,9 +295,9 @@ main PROC
             cmp dh, 0bh
             je incOnes2
             l3: ; slide
-            call drawBoulder
+            call drawBoulder2
             dec dh
-            call drawBoulder
+            call drawBoulder2
             call delayy
             call checkCollision    
             mov curBoulderXY, dx
@@ -313,9 +317,9 @@ main PROC
             cmp dh, 00h 
             jle slideStopp
             l4:
-            call drawBoulder
+            call drawBoulder2
             dec dh
-            call drawBoulder
+            call drawBoulder2
             call delayy
             call checkCollision
             mov curBoulderXY, dx
@@ -326,11 +330,10 @@ main PROC
         jmp l1
 
         slideStopp:
-call decDelay
+            call decDelay
            
-            call drawBoulder
+            call drawBoulder2
             call drawOnes
-            mov dx, 160bh
             call drawBoulder
 
             mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end
@@ -523,6 +526,13 @@ walkCycle endp
 
 leaderboard proc
     call cls
+    call drawclouds
+    mov dx, 0c510h
+    lea si, cloud2
+    call calcXYbuffer
+    mov bx, 1e0ch
+    call drawImg
+    ;call drawclouds2
     call leaderboardScreen
     ; fetch handle
     mov ax, 3d02h
@@ -713,6 +723,7 @@ restartGame proc
     mov hearts, 3
     mov score, 0
     mov dinoCycle, 2
+    mov firstjump, 0
     call resetDelay
     call drawclouds
     call drawclouds2
@@ -727,6 +738,14 @@ restartGame proc
     mov ax, @data
     mov ds, ax 
 
+    cmp firstjump, 2
+    jne gotutorial3
+    jmp m3
+
+    gotutorial3:
+        call tutorial
+
+    m3:
     mov dx, 010bh
     mov al, 2
     call drawDino 
@@ -783,7 +802,7 @@ checkCollision PROC
         ret
 
     gameOver:
-        call drawBoulder
+        call drawBoulder2
         mov dx, 010bh  
         call drawDino
         mov al, 1       ; flag for dead dino sprite
@@ -879,7 +898,7 @@ checkCollision PROC
             mov al, 0
             call drawDino
             mov curDinoXY, dx
-call EmptyKeyboardBuffer
+            call EmptyKeyboardBuffer
             call resetDelay
             jmp infloop
 checkCollision ENDP
