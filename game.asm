@@ -42,65 +42,57 @@
     counter db 0
     firstjump db 0
 
-    xloc dw 0
-    yloc dw 0
-    wid dw 0
-    height dw 0
-    color db 0
-
     hearts db 0
     handle dw ?
     filename db 'scores.txt', 0
     nameBuffer db 5 dup(?)
     scores db 00h, 7*50 dup (0)
     score dw 0
-    scorebuffer db 000h, 000h
+    scorebuffer db 000h, 000h       
     username db 'ELSA$'
 .code
 
 main PROC
-    mov ax, @data
-    mov ds, ax
-
-    call resetDelay
-
-    mov ones, 0
-    mov tens, 0
-    mov hundreds, 0
-    mov thousands, 0
-    mov hearts, 3
-    
     mov ax, @code       
     mov ds, ax
     ; screen initialization
     mov ax, 0013h
     int 10h
 
-    call cls
-    
     mov ax, @data
     mov ds, ax 
+
+    call cls
+
+    mov ones, 0
+    mov tens, 0
+    mov hundreds, 0
+    mov thousands, 0
+    mov hearts, 3
+    mov score, 0
+    
+    call resetDelay
 
     ;call leaderboard
     call menu
     call drawclouds
-    mov al, 2
-    mov dx, 010bh
+    mov al, 2           ; to know what dino sprite to print
+    mov dx, 010bh       ; cursor pos of dino
     call drawDino
     lea si, arrow
     mov dx, 6464h
-    call arrowMove
+    call arrowMove      ; print arrow
     mov ans, 0
     promptLoop2:
         call ReadCharWithTimeout
-        cmp ah, 48h
+        cmp ah, 48h         ; up arrow key
         je goUp
-        cmp ah, 50h
+        cmp ah, 50h         ; down arrow key
         je goDown
-        cmp al, 0dh
+        cmp al, 0dh         ; enter
         je confirm2
         mov curArrowPos, dx
-       ; call walkCycle
+        call walkCycle
         mov dx, curArrowPos
         jmp promptLoop2
     
@@ -163,7 +155,7 @@ main PROC
     mov ah, 4CH
     int 21h
 
-    maingame:
+    maingame:           
     call cls
     call drawhearts
     call drawclouds
@@ -213,10 +205,11 @@ main PROC
             call drawBoulder
             dec dh
             call drawBoulder
-            
+
         skipUpdate:
             call checkCollision
             call Delay
+            call checkCollision
             inc counter
             cmp counter, 3
             jne l1
@@ -264,6 +257,7 @@ main PROC
                 jmp l1
 
         slideStop:
+            call drawBoulder
             call drawOnes
 
             call decDelay
@@ -332,13 +326,13 @@ main PROC
         jmp l1
 
         slideStopp:
-            call decDelay
+call decDelay
            
             call drawBoulder
             call drawOnes
             mov dx, 160bh
             call drawBoulder
-            
+
             mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end
             cmp al, 1
             je l3  ; jumping
@@ -353,8 +347,6 @@ main PROC
             je l3  ; jumping
             jmp l4 ; falling
 main ENDP
-
-
 
 writeToRec proc  ; insert new score into hiscore list
     ; fetch handle
@@ -473,7 +465,7 @@ writeToRec proc  ; insert new score into hiscore list
             mov ah, 40h
             mov bx, handle
             lea dx, scores
-            mov cx, 2eh;
+            mov cx, 2eh
             int 21h
             ; close file
             mov ah, 3eh
@@ -498,6 +490,36 @@ tutorial proc
     ret
 tutorial endp
 
+walkCycle proc
+    push ax
+    mov dx, 010bh
+    mov al, dinoCycle
+    cmp al, 2
+    je rightfoot
+    cmp al, 3
+    je leftfoot
+
+    rightfoot:
+    mov al, 2
+    call drawDino
+    mov al, 3
+    call drawDino
+    call longDelay
+    mov dinoCycle, 3
+    pop ax
+    ret
+
+    leftfoot:
+    mov al, 3
+    call drawDino
+    mov al, 2
+    call drawDino
+    call longDelay
+    call longDelay
+    mov dinoCycle, 2
+    pop ax
+    ret
+walkCycle endp
 
 leaderboard proc
     call cls
@@ -607,10 +629,6 @@ leaderboard proc
         call main
 leaderboard endp
 
-
-
-
-
 cls proc
     mov ax, 0A000h      
     mov es, ax
@@ -693,6 +711,7 @@ restartGame proc
     mov hundreds, 0
     mov thousands, 0
     mov hearts, 3
+    mov score, 0
     mov dinoCycle, 2
     call resetDelay
     call drawclouds
@@ -702,6 +721,8 @@ restartGame proc
     mov ds, ax
 
     call cls
+    call drawclouds
+    call drawclouds2
     
     mov ax, @data
     mov ds, ax 
@@ -799,7 +820,6 @@ checkCollision PROC
         lea si, scorebuffer
         mov byte ptr [si+1], al
         call writeToRec
-        call printScore
         call deadcls
 
         minus1:
@@ -859,30 +879,10 @@ checkCollision PROC
             mov al, 0
             call drawDino
             mov curDinoXY, dx
-            call EmptyKeyboardBuffer
+call EmptyKeyboardBuffer
             call resetDelay
             jmp infloop
 checkCollision ENDP
-
-
-
-printScore proc
-    dec ones
-    mov ah, 02h
-    mov dl, thousands
-    add dl, '0'
-    int 21h
-    mov dl, hundreds
-    add dl, '0'
-    int 21h
-    mov dl, tens
-    add dl, '0'
-    int 21h
-    mov dl, ones
-    add dl, '0'
-    int 21h
-    ret
-printScore endp
 
 randomDelay PROC    
     push ax
@@ -930,7 +930,7 @@ randomDelay ENDP
 delayy PROC
 MOV AX, @DATA
 MOV DS, AX     
-    push cx
+    push cx            
     push ax
 
     mov ecx, delayVarMed  ; delay speed
@@ -944,19 +944,18 @@ MOV DS, AX
 Delayy ENDP
 
 Delay PROC
-
 MOV AX, @DATA
 MOV DS, AX     
 
-    push cx   
+    push cx            
     push ax
   
-    mov ecx, delayVarBig            
+    mov ecx, delayVarBig
     delay1:
-        nop
+        nop             
         loop delay1
-
-    mov ecx, delayVarSmol            
+    
+    mov ecx, delayVarSmol
     delay2:
         nop
         loop delay2
@@ -969,7 +968,7 @@ Delay ENDP
 longDelay proc
 MOV AX, @DATA
 MOV DS, AX     
-    push cx  
+    push cx            
     push ax
 
     mov ax, 65500
@@ -977,19 +976,19 @@ MOV DS, AX
     d1:
         nop             
         loop d1
-
+    
     mov ax, 65500
-    movzx ecx, ax
+movzx ecx, ax
     d2:
         nop
         loop d2
-
+    
      mov ax, 65500
-    movzx ecx, ax
+movzx ecx, ax
     d3:
         nop
         loop d3
-
+    
     pop ax
     pop cx
     ret
@@ -1007,7 +1006,7 @@ ReadCharWithTimeout PROC
     jz noKey        
     mov ah, 0       
     int 16h
-    call EmptyKeyboardBuffer
+call EmptyKeyboardBuffer
     ret
     noKey:
     ret
