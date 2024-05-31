@@ -254,6 +254,7 @@ main PROC
     
     slidestop2:
         call drawBoulder4
+        call drawOnes
         jmp infloop
 
     printnewsprite:
@@ -361,6 +362,7 @@ checkend2:
 
     restart:
         call drawBoulder4
+        call drawOnes
         mov newboulderpos, 0
         mov firstboulderpos, 0
         mov newSpriteFlag, 0
