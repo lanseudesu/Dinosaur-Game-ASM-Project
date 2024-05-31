@@ -87,7 +87,7 @@ getRandomNumber PROC
     mov newSpriteLocator, 08h
     jmp goBack
     seven:
-    mov newSpriteLocator, 15h
+    mov newSpriteLocator, 0bh
     jmp goBack
     eight:
     mov newSpriteLocator, 13h
