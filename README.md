@@ -16,6 +16,12 @@ Play as Rex the T-Rex and navigate through the lands while avoiding any obstacle
 
 # Infos:
 - All made in 8086 assembly
-- works with MASM v6.11
 - 'W' to jump
-- still under development!
+
+# How to Play:
+- Download DosBox using this link:
+https://www.dosbox.com/download.php?main=1
+- Download the executable game file:
+https://github.com/lanseudesu/Dinosaur-Game-ASM-Project/releases/tag/v1.0.0
+
+- Type "game" on your DosBox and enjoy!
