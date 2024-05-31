@@ -103,9 +103,9 @@ MAIN PROC
     
     printnewsprite:
         mov firstboulderpos, dx
-        mov dx, 150bh
+        mov dx, 140bh
         call drawBoulder
-        mov newboulderpos, dx
+        mov newboulderpos, d
         mov newSpriteFlag, 1
         jmp l2
     
