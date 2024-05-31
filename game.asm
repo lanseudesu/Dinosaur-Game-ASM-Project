@@ -12,6 +12,7 @@
     ;include anim.inc        ; walk cycle
     
     randSprite dw 0
+    randSprite2 dw 0
     random_seed dw 0
     DinoXY dw 960 dup (?)    ; dh = x, dl = y
     curDinoXY dw 0           ; cur = current
@@ -42,7 +43,7 @@
     curArrowPos dw 0
     counter db 0
     firstjump db 0
-
+    
     hearts db 0
     handle dw ?
     filename db 'scores.txt', 0
@@ -51,6 +52,13 @@
     score dw 0
     scorebuffer db 000h, 000h       
     username db 'ELSA$'
+    
+    newboulderpos dw 0  
+    firstboulderpos dw 0
+    newSpriteLocator db 0
+    newSpriteFlag db 0
+    didfirstend db 0
+    diedtowhat db 0
 
     sprites dw OFFSET boulder, OFFSET boulder2, OFFSET boulder3, OFFSET cacti, OFFSET cacti2
 .code
@@ -190,43 +198,77 @@ main PROC
     lea si, num0
     call printSmallLetter
     infloop:
+        mov newboulderpos, 0
+        mov firstboulderpos, 0
+        mov newSpriteFlag, 0
+        mov newSpriteLocator, 0
+        mov didfirstend, 0
+
         mov counter, 0
+        call getRandomNumber
         call drawBoulder
+        mov firstboulderpos, dx
         l1:
-            cmp dh, 00h
-            jle slideStop
-            cmp dh, 0Bh
-            je incOnes
+            jmp checkEnd
+        l3:
+            cmp newSpriteFlag, 1
+            je l2
+            mov dx, firstboulderpos
+            cmp dh, newSpriteLocator
+            je printnewsprite
         l2:
-            call ReadCharWithTimeout ; waits for user input 
+            call ReadCharWithTimeout
             cmp al, 'w' 
-            ;je checkCollision
-            je moveUp
-            cmp al, ' '
-            je moveUp
-
-            ;jmp smth
-            call drawBoulder2
-            dec dh
-            call drawBoulder2
-
-        skipUpdate:
-            call checkCollision
-            call Delay
+            je moveup
+            call decPos
+        
+         skipUpdate:
             call checkCollision
             inc counter
             cmp counter, 3
             jne l1
             jmp animate
 
-        incOnes:
-            mov curBoulderXY, dx
-            call drawOnes
-            mov dx, curBoulderXY
-            jmp l2
+
+    checkEnd:
+        cmp didfirstend, 1
+        je l4
+        mov dx, firstboulderpos
+        cmp dh, 00h
+        jle slidestop1
+        mov firstboulderpos, dx
+        jmp l4
+
+    slidestop1:
+        call drawBoulder2
+        mov didfirstend, 1
+        mov firstboulderpos, dx
+        l4:
+        cmp newSpriteFlag, 1
+        jne l3
+        mov dx, newboulderpos
+        cmp dh, 00h
+        je slidestop2
+        mov newboulderpos, dx
+        jmp l3
+    
+    slidestop2:
+        call drawBoulder4
+        call drawOnes
+        jmp infloop
+
+    printnewsprite:
+
+        mov firstboulderpos, dx
+        mov dx, 150bh
+        call drawBoulder2
+        call drawBoulder2
+        call drawBoulder3
+        mov newboulderpos, dx
+        mov newSpriteFlag, 1
+        jmp l2
 
         animate:
-            mov curBoulderXY, dx
             mov counter, 0
             mov dx, 010bh
             mov al, dinoCycle
@@ -239,8 +281,7 @@ main PROC
             mov al, 2
             call drawDino
             mov dinoCycle, 2
-            mov dx, curBoulderXY
-            jmp l1
+            jmp l4
             
             leftfoot2:
                 mov al, 2
@@ -248,8 +289,7 @@ main PROC
                 mov al, 3
                 call drawDino
                 mov dinoCycle, 3
-                mov dx, curBoulderXY
-                jmp l1
+                jmp l4
 
             rightfoot2:
                 mov al, 3
@@ -257,99 +297,168 @@ main PROC
                 mov al, 2
                 call drawDino
                 mov dinoCycle, 2
-                mov dx, curBoulderXY
-                jmp l1
-
-        slideStop:
-            call drawBoulder2
-            call drawOnes
-
-            call decDelay
-            jmp infloop
+                jmp l4
 
     gotutorial2:
         call tutorial
         jmp m2
 
     ; dino jump while still continuing obstacle slide
-    moveUp: 
-        mov curBoulderXY, dx ; preserve current boulder pos
-        cmp firstjump, 2
-        jne gotutorial2
-        m2:
-        mov dx, 010bh
-        mov ecx, 4        ; height of jump
-        mov isJumpFall, 1 ; set flag to 1 (jumping)
-        jumpLoop:
-            mov al, dinoCycle
-            call drawDino
-            dec dl
-            mov al, 0
-            call drawDino
-            mov dinoCycle, 0
-            call delayy           ; faster delay to reduce lag
-            mov curDinoXY, dx     ; preserve current dino pos
-            mov dx, curBoulderXY 
-            cmp dh, 00h 
-            jle slideStopp        ; if obstacle reaches end then go back to starting pos
-            cmp dh, 0bh
-            je incOnes2
-            l3: ; slide
-            call drawBoulder2
-            dec dh
-            call drawBoulder2
-            call delayy
-            call checkCollision    
-            mov curBoulderXY, dx
-            mov dx, curDinoXY
-        loop jumpLoop
-        mov ecx, 4
-        mov isJumpFall, 0  ; set flag to 0 (falling)
-        fallLoop:
-            mov al, 0
-            call drawDino
-            inc dl
-            mov al, 0
-            call drawDino
-            call Delayy
-            mov curDinoXY, dx
-            mov dx, curBoulderXY
-            cmp dh, 00h 
-            jle slideStopp
-            l4:
-            call drawBoulder2
-            dec dh
-            call drawBoulder2
-            call delayy
-            call checkCollision
-            mov curBoulderXY, dx
-            mov dx, curDinoXY
-        loop fallLoop
-        mov dinoCycle, 4
-        mov dx, curBoulderXY
-        jmp l1
+    moveup:
+    cmp firstjump, 2
+    jne gotutorial2
+    m2:
+    mov dx, 010bh
+    mov ecx, 4
+    mov isJumpFall, 1
+    jumpLoop:
+        mov al, dinoCycle
+        call drawDino   
+        dec dl
+        mov al, 0
+        call drawDino
+        mov dinoCycle, 0
+        call delayy
+        mov curDinoXY, dx
+        call checkEnd2
+        l5:
+        call checkCollision
+        mov dx, curDinoXY
+    loop jumpLoop
+    mov ecx, 4
+    mov isJumpFall, 0
+    fallLoop:
+        mov al, 0
+        call drawDino   
+        inc dl
+        mov al, 0
+        call drawDino
+        call delayy
+        mov curDinoXY, dx
+        call checkEnd2
+        call checkCollision
+        l6:
+        mov dx, curDinoXY
+    loop fallLoop
+    jmp l1
 
-        slideStopp:
-            call decDelay
-           
-            call drawBoulder2
-            call drawOnes
-            call drawBoulder
+checkend2:
+    cmp didfirstend, 1
+    je checkNewSprite
+    mov dx, firstboulderpos
+    cmp dh, 00h
+    je stopfirst
+    cmp newspriteflag, 1
+    je decboth
+    cmp dh, newSpriteLocator
+    je printNewSprite2
+    jmp decfirst
+    
+    checkNewSprite:
+    mov dx, newboulderpos
+    cmp dh, 00h
+    je restart
+    jmp decnew
 
-            mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end
-            cmp al, 1
-            je l3  ; jumping
-            jmp l4 ; falling
+    restart:
+        call drawBoulder4
+        call drawOnes
+        mov newboulderpos, 0
+        mov firstboulderpos, 0
+        mov newSpriteFlag, 0
+        mov newSpriteLocator, 0
+        mov didfirstend, 0
+        call getRandomNumber
 
-        incOnes2:
-            mov curBoulderXY, dx
-            call drawOnes
-            mov dx, curBoulderXY
-            mov al, isJumpFall ; check whether dino was jumping or falling when boulder reaches end
-            cmp al, 1
-            je l3  ; jumping
-            jmp l4 ; falling
+        call drawBoulder
+        mov firstboulderpos, dx
+        jmp isjumping
+
+    stopfirst:
+        call drawBoulder2
+        mov firstboulderpos, dx
+        mov didfirstend, 1
+        jmp decnew
+
+    decnew:
+        mov dx, newboulderpos
+        call drawBoulder4
+        dec dh
+        call drawBoulder4
+        call delayy
+        mov newboulderpos, dx
+        jmp isjumping
+
+    decboth:
+        call drawBoulder2
+        dec dh
+        call drawBoulder2
+        call delayy
+        mov firstboulderpos, dx
+        mov dx, newboulderpos
+        call drawBoulder4
+        dec dh
+        call drawBoulder4
+        mov newboulderpos, dx
+        jmp isjumping
+
+    decfirst:
+        call drawBoulder2
+        dec dh
+        call drawBoulder2
+        call delayy
+        mov firstboulderpos, dx
+        jmp isjumping
+
+    printNewSprite2:
+        mov firstboulderpos, dx
+        mov dx, 150bh
+        call drawBoulder2
+        call drawBoulder2
+        call drawBoulder3
+        mov newboulderpos, dx
+        mov newSpriteFlag, 1
+        mov dx, firstboulderpos
+        call decfirst
+    
+    isjumping:
+        mov al, isJumpFall
+        cmp al, 1
+        je l5
+        jmp l6
+
 main ENDP
+
+decPos proc
+    cmp didfirstend, 1
+    je addDelay
+    mov dx, firstboulderpos
+    call drawBoulder2
+    dec dh
+    call drawBoulder2
+    call delay
+    mov firstboulderpos, dx
+    cmp newSpriteFlag, 1
+    jne returnsequence
+    mov dx, newboulderpos
+    call drawBoulder4
+    dec dh
+    call drawBoulder4
+    mov newboulderpos, dx
+    returnsequence:
+    ret
+
+    addDelay:
+    cmp newSpriteFlag, 1
+    jne returnsequence
+    mov dx, newboulderpos
+    call drawBoulder4
+    dec dh
+    call drawBoulder4
+    call delay
+    mov newboulderpos, dx
+    ret
+decPos endp
 
 writeToRec proc  ; insert new score into hiscore list
     ; fetch handle
@@ -787,22 +896,46 @@ resetDelay ENDP
 
 checkCollision PROC       
     push bx
+    push dx
+    mov dx, firstboulderpos
     mov bx, curDinoXY
     cmp bl, dl          ; compare dino y to boulder y
-    jne noCollision
+    jne checksecond
     cmp bh, dh          ; compare dino x to boulder x
-    jne noCollision
+    jne checksecond
+    pop dx
     pop bx
+    mov diedtowhat, 0
     call EmptyKeyboardBuffer
     dec hearts
     jmp gameOver
 
-    noCollision: 
+    checksecond: 
+        mov dx, newboulderpos
+        cmp bl, dl          ; compare dino y to boulder y
+        jne noCollision
+        cmp bh, dh          ; compare dino x to boulder x
+        jne noCollision
+        pop dx
+        pop bx
+        mov diedtowhat, 1
+        call EmptyKeyboardBuffer
+        dec hearts
+        jmp gameOver
+
+    noCollision:
+        pop dx
         pop bx
         ret
 
     gameOver:
+        cmp diedtowhat, 1
+        je boulder2print
+        call drawBoulder4
+        mov dx, 010bh
         call drawBoulder2
+        over1:
+        mov diedtowhat, 0
         mov dx, 010bh  
         call drawDino
         mov al, 1       ; flag for dead dino sprite
@@ -901,6 +1034,11 @@ checkCollision PROC
             call EmptyKeyboardBuffer
             call resetDelay
             jmp infloop
+
+    boulder2print:
+        call drawBoulder4
+        jmp over1
+
 checkCollision ENDP
 
 randomDelay PROC    

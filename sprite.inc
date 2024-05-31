@@ -35,9 +35,72 @@ drawDino PROC
     ret
 drawDino ENDP
 
+getRandomNumber PROC
+    push cx
+    MOV AH, 00h  ; interrupts to get system time        
+    INT 1AH      ; CX:DX now hold number of clock ticks since midnight      
+
+    mov  ax, dx
+    xor  dx, dx
+    mov  cx, 10
+    div  cx       ; here dx contains the remainder of the division - from 0 to 9
+    
+    cmp dl, 0
+    je zero
+    cmp dl, 1
+    je one
+    cmp dl, 2
+    je two
+    cmp dl, 3
+    je three
+    cmp dl, 4
+    je four
+    cmp dl, 5
+    je five
+    cmp dl, 6
+    je six
+    cmp dl, 7
+    je seven
+    cmp dl, 8
+    je eight
+    mov newSpriteLocator, 0bh
+    jmp goBack
+    zero:
+    mov newSpriteLocator, 14h
+    jmp goBack
+    one:
+    mov newSpriteLocator, 12h
+    jmp goBack
+    two:
+    mov newSpriteLocator, 10h
+    jmp goBack
+    three:
+    mov newSpriteLocator, 0eh
+    jmp goBack
+    four:
+    mov newSpriteLocator, 0ch
+    jmp goBack
+    five:
+    mov newSpriteLocator, 0ah
+    jmp goBack
+    six:
+    mov newSpriteLocator, 08h
+    jmp goBack
+    seven:
+    mov newSpriteLocator, 0bh
+    jmp goBack
+    eight:
+    mov newSpriteLocator, 13h
+    jmp goBack
+
+    goBack:
+    pop cx
+    ret
+getRandomNumber ENDP
+
 drawBoulder PROC
     ; Generate random number
-    call getRandomNumber
+    call getRandomNumber2
     mov ax, dx
     ; Random number is now in AX, let's limit it to the range of available sprites (0 to 3)
     and ax, 3 ; Assuming 4 sprites, we mask with 3 to get a number between 0 and 3
@@ -45,7 +108,7 @@ drawBoulder PROC
     ; Load the sprite address into SI
     mov bx, ax
     shl bx, 1       ; Multiply by 2 (each entry is a word)
-
+    
     mov randSprite, bx
     lea si, sprites
     add si, bx      ; SI now points to the selected sprite address in the array
@@ -53,7 +116,7 @@ drawBoulder PROC
 
     ; Continue with the original procedure  
     mov al, 0
-    mov dx, 160bh
+    mov dx, 150bh
     call calcXY
     mov bx, 0f0fh
     call drawImg
@@ -72,7 +135,44 @@ drawBoulder2 proc
     ret
 drawBoulder2 endp
 
-getRandomNumber PROC
+drawBoulder3 PROC
+    ; Generate random number
+    call getRandomNumber2
+    mov ax, dx
+    ; Random number is now in AX, let's limit it to the range of available sprites (0 to 3)
+    and ax, 3 ; Assuming 4 sprites, we mask with 3 to get a number between 0 and 3
+
+    ; Load the sprite address into SI
+    mov bx, ax
+    shl bx, 1       ; Multiply by 2 (each entry is a word)
+    
+    mov randSprite2, bx
+    lea si, sprites
+    add si, bx      ; SI now points to the selected sprite address in the array
+    mov si, [si]    ; Load the sprite address into SI
+
+    ; Continue with the original procedure  
+    mov al, 0
+    mov dx, 150bh
+    call calcXY
+    mov bx, 0f0fh
+    call drawImg
+    ret
+drawBoulder3 ENDP
+
+drawBoulder4 proc
+    mov al, 0
+    call calcXY
+    mov bx, randSprite2
+    lea si, sprites
+    add si, bx      ; SI now points to the selected sprite address in the array
+    mov si, [si]    ; Load the sprite address into SI
+    mov bx, 0f0fh
+    call drawImg
+    ret
+drawBoulder4 endp
+
+getRandomNumber2 PROC
     push cx
     MOV AH, 00h  ; interrupts to get system time        
     INT 1AH      ; CX:DX now hold number of clock ticks since midnight      
@@ -81,9 +181,9 @@ getRandomNumber PROC
     xor  dx, dx
     mov  cx, 5
     div  cx       ; here dx contains the remainder of the division - from 0 to 9
-    pop cx
+    pop  cx
     ret
-getRandomNumber ENDP
+getRandomNumber2 ENDP
 
 printLetter PROC
     mov al, 0
