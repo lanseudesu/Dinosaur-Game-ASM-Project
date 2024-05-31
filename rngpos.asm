@@ -72,7 +72,7 @@ MAIN PROC
             cmp al, 'w' 
             je moveup
             call decPos
-            ;call checkCollision
+                                    call checkCollision
             jmp l1
 
     checkEnd:
@@ -88,7 +88,8 @@ MAIN PROC
         call drawBoulder
         mov didfirstend, 1
         mov firstboulderpos, dx
-        l4:
+
+    l4:
         cmp newSpriteFlag, 1
         jne l3
         mov dx, newboulderpos
@@ -121,19 +122,19 @@ MAIN PROC
         mov curDinoXY, dx
         call checkEnd2
         l5:
-        ;call checkCollision
+                                call checkCollision
         mov dx, curDinoXY
-    loop jumpLoop
-    mov ecx, 4
-    mov isJumpFall, 0
-    fallLoop:
-        call drawDino   
-        inc dl
-        call drawDino
-        call delayy
-        mov curDinoXY, dx
-        call checkEnd2
-        ;call checkCollision
+        loop jumpLoop
+        mov ecx, 4
+        mov isJumpFall, 0
+        fallLoop:
+            call drawDino   
+            inc dl
+            call drawDino
+            call delayy
+            mov curDinoXY, dx
+            call checkEnd2
+                                call checkCollision
         l6:
         mov dx, curDinoXY
     loop fallLoop
@@ -261,18 +262,18 @@ checkCollision PROC
     push ax
     mov dx, firstboulderpos
     mov bx, curDinoXY
-    mov al, dl
-    add al, 15
-    cmp al, bh
-    jl checksecond
-    mov al, dh
-    add al, 15
-    cmp al, bl
-    jl checksecond
-    mov al, bh
-    add al, 15
-    cmp al, dh
-    jl checksecond
+;   mov al, dl
+;   add al, 15
+   cmp dx, bx
+    jne checksecond
+;    mov al, dh
+;    add al, 15
+    cmp dx, bx
+    jne checksecond
+  ;  mov al, bh
+  ;  add al, 15
+    cmp dx, bx
+    jne checksecond
     
     pop bx
     pop dx
@@ -283,18 +284,18 @@ checkCollision PROC
     checksecond: 
         mov dx, newboulderpos
         mov bx, curDinoXY
-        mov al, dl
-        add al, 15
-        cmp al, dh
-        jl noCollision
-        mov al, dh
-        add al, 15
-        cmp al, dl
-        jl noCollision
-        mov al, bh
-        add al, 15
-        cmp al, bl
-        jl noCollision
+  ;      mov al, dl
+  ;      add al, 15
+        cmp dx, bx
+        jne noCollision
+   ;     mov al, dh
+   ;     add al, 15
+        cmp dx, bx
+        jne noCollision
+    ;    mov al, bh
+   ;     add al, 15
+        cmp dx, bx
+        jne noCollision
     
         pop bx
         pop dx
