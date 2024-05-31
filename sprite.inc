@@ -36,13 +36,54 @@ drawDino PROC
 drawDino ENDP
 
 drawBoulder PROC
+    ; Generate random number
+    call getRandomNumber
+    mov ax, dx
+    ; Random number is now in AX, let's limit it to the range of available sprites (0 to 3)
+    and ax, 3 ; Assuming 4 sprites, we mask with 3 to get a number between 0 and 3
+
+    ; Load the sprite address into SI
+    mov bx, ax
+    shl bx, 1       ; Multiply by 2 (each entry is a word)
+
+    mov randSprite, bx
+    lea si, sprites
+    add si, bx      ; SI now points to the selected sprite address in the array
+    mov si, [si]    ; Load the sprite address into SI
+
+    ; Continue with the original procedure  
     mov al, 0
+    mov dx, 160bh
     call calcXY
-    lea si, boulder ; load sprite to SI
     mov bx, 0f0fh
     call drawImg
     ret
 drawBoulder ENDP
+
+drawBoulder2 proc
+    mov al, 0
+    call calcXY
+    mov bx, randSprite
+    lea si, sprites
+    add si, bx      ; SI now points to the selected sprite address in the array
+    mov si, [si]    ; Load the sprite address into SI
+    mov bx, 0f0fh
+    call drawImg
+    ret
+drawBoulder2 endp
+
+getRandomNumber PROC
+    push cx
+    MOV AH, 00h  ; interrupts to get system time        
+    INT 1AH      ; CX:DX now hold number of clock ticks since midnight      
+
+    mov  ax, dx
+    xor  dx, dx
+    mov  cx, 5
+    div  cx       ; here dx contains the remainder of the division - from 0 to 9
+    pop cx
+    ret
+getRandomNumber ENDP
 
 printLetter PROC
     mov al, 0
