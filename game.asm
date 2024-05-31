@@ -1,6 +1,3 @@
-; todo: shorten/simplify code
-; - random interval for obstacles spawning
-
 .model small
 .386
 .stack 1024
@@ -9,58 +6,53 @@
     include fifteen.inc      ; include all sprites except alphabet
     include alphabet.inc     ; alphabet and numbers for score and name input
     include score.inc        ; score printing
-    ;include anim.inc        ; walk cycle
     
-    randSprite dw 0
+    randSprite dw 0          ; random sprite from sprites array
     randSprite2 dw 0
-    random_seed dw 0
-    DinoXY dw 960 dup (?)    ; dh = x, dl = y
-    curDinoXY dw 0           ; cur = current
-    curBoulderXY dw 0
+    
+    curDinoXY dw 0           ; cur = current dh = x, dl = y
 
-    randomNum db 0
     delayVarBig dd 20000        ;walking
     delayVarMed dd 10687        ;jumping
     delayVarSmol dd 15000
 
     isJumpFall db 0          ; is dino jumping or falling flag
-    curScore dw 960 dup (?)
 
     ones db 0                ; scores, ones
     newOnes db 0             ; flag if ones is repeating
-
     tens db 0         
     newTens db 0
-
     hundreds db 0
     newHundreds db 0
-
     thousands db 0
     newThousands db 0
 
-    ans db 0
-    dinoCycle db 2
-    curArrowPos dw 0
-    counter db 0
-    firstjump db 0
+    ans db 0            ; used for menu buttons and try again buttons
+    dinoCycle db 2      ; dino animation
+    curArrowPos dw 0    ; use to preserve arrow pos
+    counter db 0        ; counter for dino animation
+    firstjump db 0      ; flag whether dino has jumped (for tutorial)
     
-    hearts db 0
-    handle dw ?
-    filename db 'scores.txt', 0
+    hearts db 0         ; lives
+
+    ;leaderboard related vars
+    handle dw ?                     ; url of file used to store score (scores.txt)
+    filename db 'scores.txt', 0     
     nameBuffer db 5 dup(?)
     scores db 00h, 7*50 dup (0)
     score dw 0
     scorebuffer db 000h, 000h       
     username db 'ELSA$'
     
-    newboulderpos dw 0  
-    firstboulderpos dw 0
-    newSpriteLocator db 0
-    newSpriteFlag db 0
-    didfirstend db 0
-    diedtowhat db 0
+    newboulderpos dw 0          ; holds second obstacle pos
+    firstboulderpos dw 0        ; holds first obstacle pos
+    newSpriteLocator db 0       ; x pos to determine whether we printing the 2nd obstacle
+    newSpriteFlag db 0          ; flag if new obstacle was printed alr
+    didfirstend db 0            ; flag to determine if first obstacle has reached the end
+    diedtowhat db 0             ; determine if we died to 1st or 2nd obstacle
 
-    sprites dw OFFSET boulder, OFFSET boulder2, OFFSET boulder3, OFFSET cacti, OFFSET cacti2
+    ; array for different obstacles
+    sprites dw OFFSET boulder, OFFSET boulder2, OFFSET boulder3, OFFSET cacti, OFFSET cacti2 
 .code
 
 main PROC
@@ -75,6 +67,7 @@ main PROC
 
     call cls
 
+    ;var init:
     mov ones, 0
     mov tens, 0
     mov hundreds, 0
@@ -82,16 +75,15 @@ main PROC
     mov hearts, 3
     mov score, 0
     
-    call resetDelay
+    call resetDelay     ; initialize default spd of obstacles
 
-    ;call leaderboard
-    call menu
-    call drawclouds
-    ;mov dx, 150bh
-    ;call drawBoulder
+    call menu           
+    call drawclouds     
+    ; dino animation
     mov al, 2           ; to know what dino sprite to print
     mov dx, 010bh       ; cursor pos of dino
     call drawDino
+
     lea si, arrow
     mov dx, 6464h
     call arrowMove      ; print arrow
@@ -187,6 +179,7 @@ main PROC
     mov al, 2
     call drawDino 
     mov curDinoXY, dx
+    ; draw 0000 numbers
     call drawOnes
     mov dx, 1c00h
     lea si, num0
@@ -220,6 +213,8 @@ main PROC
             call ReadCharWithTimeout
             cmp al, 'w' 
             je moveup
+            cmp al, ' '
+            je moveUp
             call decPos
         
          skipUpdate:
@@ -243,6 +238,7 @@ main PROC
         call drawBoulder2
         mov didfirstend, 1
         mov firstboulderpos, dx
+        call drawOnes
         l4:
         cmp newSpriteFlag, 1
         jne l3
@@ -255,6 +251,7 @@ main PROC
     slidestop2:
         call drawBoulder4
         call drawOnes
+        call decDelay
         jmp infloop
 
     printnewsprite:
@@ -361,6 +358,7 @@ checkend2:
     jmp decnew
 
     restart:
+        call decdelay
         call drawBoulder4
         call drawOnes
         mov newboulderpos, 0
@@ -378,6 +376,7 @@ checkend2:
         call drawBoulder2
         mov firstboulderpos, dx
         mov didfirstend, 1
+        call drawOnes
         jmp decnew
 
     decnew:
@@ -467,6 +466,7 @@ writeToRec proc  ; insert new score into hiscore list
     int 21h
     jnc continueReading2
 
+    ; create file if there is an error opening file
     mov ax, 3c00h
     mov cx, 0
     lea dx, filename
@@ -474,6 +474,7 @@ writeToRec proc  ; insert new score into hiscore list
     
     continueReading2:
     mov handle, ax ; return ax as handle        
+
     ; go to start of file
     mov ax, 4200h
     mov bx, handle
@@ -505,7 +506,7 @@ writeToRec proc  ; insert new score into hiscore list
             mov byte ptr [di], dl
             inc si
             inc di
-            loop inpname
+        loop inpname
             lea si, scorebuffer ; insert score
             mov dh, byte ptr [si]
             mov dl, byte ptr [si+1]
@@ -966,7 +967,7 @@ checkCollision PROC
             call printSmallLetter
             inc dh
         loop readcharacter
-        mov byte ptr ds:[bp], '$'
+        mov byte ptr ds:[bp], '$' 
         mov ax, score
         dec ax
         lea si, scorebuffer
@@ -996,12 +997,12 @@ checkCollision PROC
             je minus1
             cmp al, 1
             je minus2
-        rloop:
+    rloop:
             mov dx, 0f08h
             lea si, num3
             call printSmallLetter
             call longDelay
-            call longDelay
+            call longDelay    
             call longDelay
             call longDelay
             mov dx, 0f08h
@@ -1034,7 +1035,6 @@ checkCollision PROC
             call EmptyKeyboardBuffer
             call resetDelay
             jmp infloop
-
     boulder2print:
         call drawBoulder4
         jmp over1
@@ -1063,19 +1063,7 @@ randomDelay PROC
             nop
         loop randDelayLoop
 
-        ; mov ax, delayVarBig
-        ; sub ax, 1000
-        ; mov delayVarBig, ax
-    
-        ; Decrement delayVarMed by 1000
-        ; mov ax, delayVarMed
-        ; sub ax, 1000
-        ; mov delayVarMed, ax
-    
-        ; Decrement delayVarSmol by 1000
-        ; mov ax, delayVarSmol
-        ; sub ax, 1000
-        ; mov delayVarSmol, ax
+ 
     
     pop dx
     pop cx
@@ -1116,7 +1104,7 @@ MOV DS, AX
     delay2:
         nop
         loop delay2
-
+    
     pop ax
     pop cx
     ret

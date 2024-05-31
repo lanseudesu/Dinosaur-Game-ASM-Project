@@ -99,22 +99,19 @@ getRandomNumber PROC
 getRandomNumber ENDP
 
 drawBoulder PROC
-    ; Generate random number
     call getRandomNumber2
     mov ax, dx
-    ; Random number is now in AX, let's limit it to the range of available sprites (0 to 3)
-    and ax, 3 ; Assuming 4 sprites, we mask with 3 to get a number between 0 and 3
 
-    ; Load the sprite address into SI
+    and ax, 3 
+
     mov bx, ax
-    shl bx, 1       ; Multiply by 2 (each entry is a word)
+    shl bx, 1       ; * 2 because each entry is a word
     
     mov randSprite, bx
     lea si, sprites
-    add si, bx      ; SI now points to the selected sprite address in the array
-    mov si, [si]    ; Load the sprite address into SI
+    add si, bx      
+    mov si, [si]   
 
-    ; Continue with the original procedure  
     mov al, 0
     mov dx, 150bh
     call calcXY
@@ -128,30 +125,27 @@ drawBoulder2 proc
     call calcXY
     mov bx, randSprite
     lea si, sprites
-    add si, bx      ; SI now points to the selected sprite address in the array
-    mov si, [si]    ; Load the sprite address into SI
+    add si, bx      
+    mov si, [si]    
     mov bx, 0f0fh
     call drawImg
     ret
 drawBoulder2 endp
 
 drawBoulder3 PROC
-    ; Generate random number
     call getRandomNumber2
     mov ax, dx
-    ; Random number is now in AX, let's limit it to the range of available sprites (0 to 3)
-    and ax, 3 ; Assuming 4 sprites, we mask with 3 to get a number between 0 and 3
+    ; random number is now in ax
+    and ax, 3 ; assuming 4 sprites, we mask with 3 to get a number between 0 and 3
 
-    ; Load the sprite address into SI
     mov bx, ax
-    shl bx, 1       ; Multiply by 2 (each entry is a word)
+    shl bx, 1       ; mul by 2 (each entry is a word)
     
     mov randSprite2, bx
     lea si, sprites
-    add si, bx      ; SI now points to the selected sprite address in the array
-    mov si, [si]    ; Load the sprite address into SI
+    add si, bx      
+    mov si, [si]    
 
-    ; Continue with the original procedure  
     mov al, 0
     mov dx, 150bh
     call calcXY
@@ -165,8 +159,8 @@ drawBoulder4 proc
     call calcXY
     mov bx, randSprite2
     lea si, sprites
-    add si, bx      ; SI now points to the selected sprite address in the array
-    mov si, [si]    ; Load the sprite address into SI
+    add si, bx     
+    mov si, [si]    
     mov bx, 0f0fh
     call drawImg
     ret
