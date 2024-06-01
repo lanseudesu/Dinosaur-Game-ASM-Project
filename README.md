@@ -19,9 +19,7 @@ Play as Rex the T-Rex and navigate through the lands while avoiding any obstacle
 - 'W' to jump
 
 # How to Play:
-- Download DosBox using this link:
-https://www.dosbox.com/download.php?main=1
-- Download the executable game file:
-https://github.com/lanseudesu/Dinosaur-Game-ASM-Project/releases/tag/v1.0.0
+- Download DosBox using this [link.](https://www.dosbox.com/download.php?main=1)
+- Download the executable game using this [link.](https://github.com/lanseudesu/Dinosaur-Game-ASM-Project/releases/tag/v1.1.0)
 
 - Type "game" on your DosBox and enjoy!
