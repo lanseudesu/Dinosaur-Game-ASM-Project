@@ -918,7 +918,7 @@ checkCollision PROC
     pop bx
     add diedtowhat, 1
     call EmptyKeyboardBuffer
-    ;dec hearts
+    dec hearts
     jmp gameOver
 
     checksecond: 
@@ -931,7 +931,7 @@ checkCollision PROC
         pop bx
         add diedtowhat, 2
         call EmptyKeyboardBuffer
-        ;dec hearts
+        dec hearts
         jmp gameOver
 
     noCollision:
