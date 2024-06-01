@@ -215,7 +215,10 @@ main PROC
             je moveup
             cmp al, ' '
             je moveUp
+            cmp al, 'x'
+            je gomain
             call decPos
+        
         
          skipUpdate:
             call checkCollision
@@ -425,6 +428,9 @@ checkend2:
         cmp al, 1
         je l5
         jmp l6
+    
+    goMain:
+        call goBackMain
 
 main ENDP
 
