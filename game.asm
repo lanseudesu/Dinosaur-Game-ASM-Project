@@ -74,6 +74,7 @@ main PROC
     mov thousands, 0
     mov hearts, 3
     mov score, 0
+    mov firstjump, 0
     
     call resetDelay     ; initialize default spd of obstacles
 
@@ -322,7 +323,7 @@ main PROC
         mov curDinoXY, dx
         call checkEnd2
         l5:
-        call checkCollision
+        ;call checkCollision
         mov dx, curDinoXY
     loop jumpLoop
     mov ecx, 4
@@ -336,10 +337,13 @@ main PROC
         call delayy
         mov curDinoXY, dx
         call checkEnd2
-        call checkCollision
+        ;call checkCollision
         l6:
         mov dx, curDinoXY
     loop fallLoop
+    mov diedtowhat, 2
+    call checkCollision
+    mov diedtowhat, 0
     jmp l1
 
 checkend2:
@@ -430,7 +434,7 @@ checkend2:
         jmp l6
     
     goMain:
-        call goBackMain
+        call main
 
 main ENDP
 
@@ -912,9 +916,9 @@ checkCollision PROC
     jne checksecond
     pop dx
     pop bx
-    mov diedtowhat, 0
+    add diedtowhat, 1
     call EmptyKeyboardBuffer
-    dec hearts
+    ;dec hearts
     jmp gameOver
 
     checksecond: 
@@ -925,9 +929,9 @@ checkCollision PROC
         jne noCollision
         pop dx
         pop bx
-        mov diedtowhat, 1
+        add diedtowhat, 2
         call EmptyKeyboardBuffer
-        dec hearts
+        ;dec hearts
         jmp gameOver
 
     noCollision:
@@ -937,10 +941,27 @@ checkCollision PROC
 
     gameOver:
         cmp diedtowhat, 1
+        je boulder1print
+        cmp diedtowhat, 2
         je boulder2print
+        cmp diedtowhat, 3
+        je boulder1print
+        cmp diedtowhat, 4
+        je boulder2print
+
+    boulder1print:
+    mov dx, newboulderpos
         call drawBoulder4
         mov dx, 010bh
         call drawBoulder2
+        jmp over1
+
+        
+    boulder2print:
+    mov dx, newboulderpos
+        call drawBoulder4
+        jmp over1
+
         over1:
         mov diedtowhat, 0
         mov dx, 010bh  
@@ -1041,9 +1062,6 @@ checkCollision PROC
             call EmptyKeyboardBuffer
             call resetDelay
             jmp infloop
-    boulder2print:
-        call drawBoulder4
-        jmp over1
 
 checkCollision ENDP
 
