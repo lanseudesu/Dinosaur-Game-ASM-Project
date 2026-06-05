@@ -1,25 +1,70 @@
-# **20232 Group 3 Block 3 Fri 8am**
+# T-Rex
 
-### Leader: Abenoja, Stephen Lloyd
+Play as Rex the T-Rex and navigate through dangerous terrain while avoiding obstacles. Time your jumps carefully and see how long you can survive! Academic project developed as part of a Computer Organization and Assembly Language course.
 
-### Members: 
-- Austero, Abdiel
-- Duro, Johan Brent
-- Fernandez, Lantis Red 
-- Manduriaga, Emman
-- Ramos, Joan
-- Tarino, Janna Lyka
-- Sanchez, Venus Aira
+## Features
 
-# **T-Rex**
-Play as Rex the T-Rex and navigate through the lands while avoiding any obstacles by jumping above them. Good luck!
+- Developed entirely in 8086 Assembly
+- Classic side-scrolling gameplay
+- Keyboard-controlled jumping
+- Runs in DOS using DOSBox
 
-# Infos:
-- All made in 8086 assembly
-- 'W' to jump
+## Controls
 
-# How to Play:
-- Download DosBox using this [link.](https://www.dosbox.com/download.php?main=1)
-- Download the executable game using this [link.](https://github.com/lanseudesu/Dinosaur-Game-ASM-Project/releases/tag/v1.1.0)
+| Key | Action |
+|------|---------|
+| W | Jump |
 
-- Type "game" on your DosBox and enjoy!
+## Installation
+
+### Requirements
+
+- DOSBox
+
+### Download DOSBox
+
+Download and install DOSBox from:
+
+[DOSBox Download](https://www.dosbox.com/download.php?main=1)
+
+### Download the Game
+
+Download the executable:
+
+[Download T-Rex](https://github.com/lanseudesu/Dinosaur-Game-ASM-Project/releases/tag/v1.1.0)
+
+## Running the Game
+
+1. Open DOSBox.
+2. Mount the folder containing the game executable.
+```dos
+mount c: [folder directory]
+```
+4. Navigate to the game directory.
+5. Run:
+
+```dos
+game
+```
+
+5. Enjoy!
+
+## Developers
+
+### Lead Developer:
+- Lantis Red Fernandez
+
+### Members
+- Abdiel Austero
+- Stephen Lloyd Abenoja
+- Johan Brent Duro
+- Emman Manduriaga
+- Joan Ramos
+- Janna Lyka Tarino
+- Venus Aira Sanchez
+
+## Technical Details
+
+- Language: 8086 Assembly
+- Platform: DOS
+- Emulator: DOSBox
