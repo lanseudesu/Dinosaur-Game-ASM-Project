@@ -9,6 +9,10 @@ Play as Rex the T-Rex and navigate through dangerous terrain while avoiding obst
 - Keyboard-controlled jumping
 - Runs in DOS using DOSBox
 
+## Screenshot
+
+![Gameplay](screenshots/gameplay.jfif)
+
 ## Controls
 
 | Key | Action |
